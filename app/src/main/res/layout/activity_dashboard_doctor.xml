@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textview_todays_schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Todays Schedule"
+        android:textSize="20sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tast_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textview_todays_schedule"
+        android:scrollbars="vertical" />
+
+    <ImageButton
+        android:id="@+id/floating_button_doctor"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/floating_button" />
+
+</FrameLayout>

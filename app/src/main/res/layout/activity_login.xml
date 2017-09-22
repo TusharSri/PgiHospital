@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e3f2f9">
+
+    <EditText
+        android:id="@+id/edittext_aadhar_number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:maxLength="14"
+        android:maxLines="1"
+        android:hint="Enter Adhar number here"
+        android:layout_above="@+id/text_or"
+        android:inputType="phone"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/text_or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_aadhar_number"
+        android:layout_centerInParent="true"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="OR"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/button_scan_qr_code"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/text_or"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:background="#4aa1ed"
+        android:gravity="center"
+        android:text="Click here to scan QR code"
+        android:textSize="20sp" />
+
+</RelativeLayout>

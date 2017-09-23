@@ -206,13 +206,13 @@ public class Dashboard extends AppCompatActivity {
         patientImage.add(R.mipmap.ic_launcher);
         // Adding child data
         List<String> desc1 = new ArrayList<String>();
-        desc1.add("here we are showing the desises description r something else");
+        desc1.add("here we are showing the desises description r something else.............................");
 
         List<String> desc2 = new ArrayList<String>();
-        desc2.add("here we are showing the desises description r something else");
+        desc2.add("here we are showing the desises description r something else...............................");
 
         List<String> desc3 = new ArrayList<String>();
-        desc3.add("here we are showing the desises description r something else");
+        desc3.add("here we are showing the desises description r something else.....................................");
 
         patientDetails.put(patientName.get(0), desc1); // Header, Child data
         patientDetails.put(patientName.get(1), desc2);

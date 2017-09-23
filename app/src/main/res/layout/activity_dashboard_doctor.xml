@@ -3,24 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textview_todays_schedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Todays Schedule"
-        android:textSize="20sp" />
-
     <ExpandableListView
         android:id="@+id/lvExp"
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
-
-<!--    <android.support.v7.widget.RecyclerView
-        android:id="@+id/tast_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textview_todays_schedule"
-        android:scrollbars="vertical" />-->
 
     <ImageButton
         android:id="@+id/floating_button_doctor"

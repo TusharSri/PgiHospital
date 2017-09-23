@@ -5,19 +5,31 @@ import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.tushar.pgi.Adapter.CardRecyclerViewAdapter;
+import com.example.tushar.pgi.Adapter.ExpandableListAdapter;
 import com.example.tushar.pgi.Adapter.ItemRecyclerViewAdapter;
+import com.example.tushar.pgi.model.Appointment;
+import com.example.tushar.pgi.model.DoctorModel;
 import com.example.tushar.pgi.model.ItemObjects;
 import com.example.tushar.pgi.model.PatientCard;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,30 +37,94 @@ public class Dashboard extends AppCompatActivity {
 
     Boolean isDoctor;
     private final int REQ_CODE_SPEECH_INPUT = 100;
+    ExpandableListAdapter listAdapter;
+    ExpandableListView expListView;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent loginIntent = getIntent();
-        String qrCode = loginIntent.getStringExtra("scannedQR");
-        String aadharNumber = loginIntent.getStringExtra("aadharNumber");
-        if (qrCode.equals("111122223333") || aadharNumber.equals("111122223333")) {
+        uid = loginIntent.getStringExtra("uid");
+        String type = loginIntent.getStringExtra("type");
+
+
+        if (type.equalsIgnoreCase("doctor")) {
+            getDoctorData();
             isDoctor = true;
-        } else if (qrCode.equals("999988887777") || aadharNumber.equals("999988887777")) {
+        } else{
             isDoctor = false;
         }
         setLayoutOfDashboard(isDoctor);
     }
 
+
+
+    /**
+     *  This method gets the data of the particular doctor
+     */
+    private void getDoctorData() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("doctors");
+
+        Query queryRef = myRef.orderByChild("uid").equalTo(uid);
+
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    DoctorModel model = child.getValue(DoctorModel.class);
+                    Date date = new Date();
+                    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
+                    String a = dateFormat.format(date);
+                    Toast.makeText(Dashboard.this, a, Toast.LENGTH_SHORT).show();
+
+                    Query aa =child.getRef().orderByChild("appointment").getRef().orderByChild("date").equalTo(a);
+                    aa.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for ()
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void setLayoutOfDashboard(boolean isDoctor) {
         if (isDoctor) {
             setContentView(R.layout.activity_dashboard_doctor);
+
+            // get the listview
+            expListView = (ExpandableListView) findViewById(R.id.lvExp);
+
+            // preparing list data
+            prepareListData();
+
+            listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+
+            // setting list adapter
+            expListView.setAdapter(listAdapter);
+
             List<PatientCard> patientCardData = getPatientCardData();
-            CardRecyclerViewAdapter recyclerViewArrayAdapter = new CardRecyclerViewAdapter(patientCardData, getApplicationContext());
+           /* CardRecyclerViewAdapter recyclerViewArrayAdapter = new CardRecyclerViewAdapter(patientCardData, getApplicationContext());
             RecyclerView simpleRecyclerView = (RecyclerView) findViewById(R.id.tast_recyclerview);
             simpleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            simpleRecyclerView.setAdapter(recyclerViewArrayAdapter);
+            simpleRecyclerView.setAdapter(recyclerViewArrayAdapter);*/
             ImageView doctorFloatingButton = (ImageView) findViewById(R.id.floating_button_doctor);
             doctorFloatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -144,5 +220,32 @@ public class Dashboard extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    /*
+    * Preparing the list data
+    */
+    private void prepareListData() {
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+
+        // Adding Parent data
+        listDataHeader.add("Patient 1");
+        listDataHeader.add("Patient 2");
+        listDataHeader.add("Patient 3");
+
+        // Adding child data
+        List<String> top250 = new ArrayList<String>();
+        top250.add("The Shawshank Redemption");
+
+        List<String> nowShowing = new ArrayList<String>();
+        nowShowing.add("The Conjuring");
+
+        List<String> comingSoon = new ArrayList<String>();
+        comingSoon.add("2 Guns");
+
+        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
+        listDataChild.put(listDataHeader.get(1), nowShowing);
+        listDataChild.put(listDataHeader.get(2), comingSoon);
     }
 }

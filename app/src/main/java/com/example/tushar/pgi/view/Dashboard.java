@@ -2,11 +2,11 @@ package com.example.tushar.pgi.view;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.os.Build;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -34,12 +34,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitListener {
+public class Dashboard extends AppCompatActivity {
 
     Boolean isDoctor;
     private final int REQ_CODE_SPEECH_INPUT = 100;
@@ -68,6 +66,7 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
         if (type.equalsIgnoreCase("doctor")) {
             getDoctorData();
             isDoctor = true;
+            setContentView(R.layout.activity_dashboard_doctor);
         } else {
             isDoctor = false;
         }
@@ -103,7 +102,6 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
     /**
      * This method brings out all the appointments and shows them to the user
      *
-     * @param model
      */
     private void showAppointments(DoctorModel model) {
         List<Appointment> todaysAppointments = new ArrayList<>();
@@ -118,15 +116,14 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
                 todaysAppointments.add(appointment);
             }
         }
+        //todays appointment
+
     }
 
     private void setLayoutOfDashboard(boolean isDoctor) {
         if (isDoctor) {
-            setContentView(R.layout.activity_dashboard_doctor);
-            tts = new TextToSpeech(this, this);
             expListView = (ExpandableListView) findViewById(R.id.lvExp);
             prepareListData();
-            speakOut("ten");
             listAdapter = new ExpandableListAdapter(this, patientName, patientDetails,
                     buildingNumber, floorNumber, roomNumber, bedNumber, patientTime, patientImage);
             expListView.setAdapter(listAdapter);
@@ -135,6 +132,22 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
                 @Override
                 public void onClick(View view) {
                     promptSpeechInput();
+                }
+            });
+
+            tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int status) {
+                    if (status == TextToSpeech.SUCCESS) {
+                        int result = tts.setLanguage(Locale.US);
+                        if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                            Log.e("TTS", "This Language is not supported");
+                        }
+                        speak("Hello");
+
+                    } else {
+                        Log.e("TTS", "Initilization Failed!");
+                    }
                 }
             });
         } else {
@@ -154,6 +167,15 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
                     promptSpeechInput();
                 }
             });
+        }
+    }
+
+    private void speak(String text) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+
+        } else {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 
@@ -206,9 +228,9 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     if (isDoctor) {
                         if (result.get(0).contains("appointment")) {
-                            Toast.makeText(this, "todays Appointment shown to doctor", Toast.LENGTH_SHORT).show();
+                            speak("todays Appointment shown to doctor");
                         } else if (result.get(0).contains("leave")) {
-                            Toast.makeText(this, "Leave Applied", Toast.LENGTH_SHORT).show();
+                            speak("Leave Applied");
                         }
                     } else {
                         if (result.get(0).contains("appointment")) {
@@ -276,38 +298,5 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
         patientDetails.put(patientName.get(1), desc2);
         patientDetails.put(patientName.get(2), desc3);
 
-    }
-
-    @Override
-    public void onInit(int status) {
-        if (status == TextToSpeech.SUCCESS) {
-
-            int result = tts.setLanguage(Locale.US);
-
-            if (result == TextToSpeech.LANG_MISSING_DATA
-                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.e("TTS", "This Language is not supported");
-            } else {
-                speakOut("zero");
-            }
-
-        } else {
-            Log.e("TTS", "Initilization Failed!");
-        }
-    }
-
-    private void speakOut(String number) {
-        String text = "You have total of " + number + " appointments today";
-        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-    }
-
-    @Override
-    public void onDestroy() {
-        // Don't forget to shutdown tts!
-        if (tts != null) {
-            tts.stop();
-            tts.shutdown();
-        }
-        super.onDestroy();
     }
 }

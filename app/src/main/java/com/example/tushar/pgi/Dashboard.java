@@ -78,26 +78,7 @@ public class Dashboard extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()){
                     DoctorModel model = child.getValue(DoctorModel.class);
-                    Date date = new Date();
-                    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
-                    String a = dateFormat.format(date);
-                    Toast.makeText(Dashboard.this, a, Toast.LENGTH_SHORT).show();
-
-                    Query aa =child.getRef().orderByChild("appointment").getRef().orderByChild("date").equalTo(a);
-                    aa.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot childd : dataSnapshot.getChildren()){
-                                Log.e("awefwefawefawefawefewf",childd.getValue().toString());
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
+                    showAppointments(model);
                 }
             }
 
@@ -106,6 +87,25 @@ public class Dashboard extends AppCompatActivity {
 
             }
         });
+    }
+
+    /**
+     * This method brings out all the appointments and shows them to the user
+     * @param model
+     */
+    private void showAppointments(DoctorModel model) {
+        List<Appointment> todaysAppointments = new ArrayList<>();
+        List<Appointment> listOfAppointments = model.getAppointments();
+
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
+        String currentDate = dateFormat.format(date);
+
+        for (Appointment appointment : listOfAppointments){
+            if (appointment.getDate().equalsIgnoreCase(currentDate)){
+                todaysAppointments.add(appointment);
+            }
+        }
     }
 
     private void setLayoutOfDashboard(boolean isDoctor) {

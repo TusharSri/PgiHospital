@@ -16,6 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.Dashboard"></activity>
+        <activity android:name=".view.DoctorsListActivity"></activity>
+        <activity android:name=".view.DoctorCategoriesActivity"></activity>
     </application>
 
 </manifest>

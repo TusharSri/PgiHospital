@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_corner_expanded_bg">
+
+    <ImageView
+        android:id="@+id/imageview_patient"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/text_patient_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17dp"
+        android:layout_toRightOf="@+id/imageview_patient"
+        android:padding="5dp"/>
+
+    <Button
+        android:id="@+id/button_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageview_patient"
+        android:text="Done"
+        android:layout_margin="10dp"/>
+
+    <Button
+        android:id="@+id/button_not_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageview_patient"
+        android:layout_alignParentRight="true"
+        android:text="Unable to attend"
+        android:layout_margin="10dp"/>
+
+</RelativeLayout>

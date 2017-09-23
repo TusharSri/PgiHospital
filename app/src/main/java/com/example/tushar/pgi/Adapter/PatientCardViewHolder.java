@@ -28,7 +28,6 @@ public class PatientCardViewHolder extends RecyclerView.ViewHolder{
         floorNumber = (TextView) itemView.findViewById(R.id.text_floor_number);
         roomNumber = (TextView) itemView.findViewById(R.id.text_room_number);
         bedNumber = (TextView) itemView.findViewById(R.id.text_bed_number);
-        desieseDescription = (TextView) itemView.findViewById(R.id.text_patiend_description);
         patientImage = (ImageView) itemView.findViewById(R.id.imageview_patient);
     }
 }

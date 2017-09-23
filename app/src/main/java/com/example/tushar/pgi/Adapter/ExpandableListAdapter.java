@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.tushar.pgi.R;
 import com.example.tushar.pgi.model.Appointment;
+import com.example.tushar.pgi.view.PatientPrescription;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -53,7 +55,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
+    public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
         final String childText = (String) getChild(groupPosition, childPosition);
@@ -67,7 +69,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(_context, "awefawefweaf", Toast.LENGTH_SHORT).show();
+                Intent patientdetail = new Intent(_context, PatientPrescription.class);
+                patientdetail.putExtra("patient_data",appointments.get(groupPosition));
+                _context.startActivity(patientdetail);
+
             }
         });
 

@@ -228,7 +228,6 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
             } else {
                 speakOut("zero");
             }
-
         } else {
             Log.e("TTS", "Initilization Failed!");
         }

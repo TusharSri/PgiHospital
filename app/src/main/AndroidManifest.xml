@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.tushar.pgi">
+    package="com.example.tushar.pgi">
 
     <application
         android:allowBackup="true"
@@ -10,16 +10,16 @@
         android:theme="@style/AppTheme">
         <activity android:name=".view.LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.Dashboard"/>
-        <activity android:name=".view.DoctorsListActivity"/>
-        <activity android:name=".view.DoctorCategoriesActivity"/>
-        <activity android:name=".Adapter.BookAppointmentActivity">
-        </activity>
+        <activity android:name=".view.Dashboard" />
+        <activity android:name=".view.DoctorsListActivity" />
+        <activity android:name=".view.DoctorCategoriesActivity" />
+        <activity android:name=".Adapter.BookAppointmentActivity"></activity>
+        <activity android:name=".view.PatientPrescription"></activity>
     </application>
 
 </manifest>

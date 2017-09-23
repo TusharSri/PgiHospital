@@ -50,6 +50,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder
             public void onClick(View v) {
                 if(itemList.get(position).getName().equalsIgnoreCase("Book Appointment")){
                     Intent intent = new Intent(context, DoctorCategoriesActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }else{
                     Toast.makeText(context, "categry is "+itemList.get(position).getName(), Toast.LENGTH_SHORT).show();

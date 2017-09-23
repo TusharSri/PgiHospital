@@ -15,11 +15,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.Dashboard" />
-        <activity android:name=".view.DoctorsListActivity" />
-        <activity android:name=".view.DoctorCategoriesActivity" />
-        <activity android:name=".view.BookAppointmentActivity"></activity>
-        <activity android:name=".view.PatientPrescription"></activity>
+        <activity android:name=".view.Dashboard"/>
+        <activity android:name=".view.DoctorsListActivity"/>
+        <activity android:name=".view.DoctorCategoriesActivity"/>
+        <activity android:name=".Adapter.BookAppointmentActivity"/>
+        <activity android:name=".view.PatientPrescription"/>
+        <activity android:name=".view.BaseActivity">
+        </activity>
     </application>
 
 </manifest>

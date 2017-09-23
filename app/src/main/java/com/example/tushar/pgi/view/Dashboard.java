@@ -1,6 +1,7 @@
 package com.example.tushar.pgi.view;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -15,13 +16,13 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.example.tushar.pgi.Adapter.ExpandableListAdapter;
 import com.example.tushar.pgi.Adapter.ItemRecyclerViewAdapter;
 import com.example.tushar.pgi.R;
 import com.example.tushar.pgi.model.Appointment;
 import com.example.tushar.pgi.model.DoctorModel;
 import com.example.tushar.pgi.model.ItemObjects;
+import com.example.tushar.pgi.model.Patient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,10 +63,42 @@ public class Dashboard extends AppCompatActivity {
             isDoctor = true;
             getDoctorData();
         } else {
+            savePatientInformationInSp(uid);
             isDoctor = false;
             setLayoutOfDashboard(false, null);
         }
     }
+
+    /**
+     * This method saves the patient information in the db
+     * @param uid
+     */
+    private void savePatientInformationInSp(final String uid) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("patient");
+
+        Query queryRef = myRef.orderByChild("uid").equalTo(uid);
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    Patient patient = child.getValue(Patient.class);
+                    String MyPREFERENCES = "abcd";
+                    SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString("patientuid", uid);
+                    editor.putString("name", patient.getName());
+                    editor.commit();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     /**
      * This method gets the data of the particular doctor

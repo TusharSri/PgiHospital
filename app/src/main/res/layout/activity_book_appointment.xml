@@ -72,6 +72,7 @@
                 android:layout_height="wrap_content"/>
 
             <Spinner
+                android:id="@+id/spinner_time_slot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

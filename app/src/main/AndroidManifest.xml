@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/pgi_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -18,7 +18,7 @@
         <activity android:name=".view.Dashboard" />
         <activity android:name=".view.DoctorsListActivity" />
         <activity android:name=".view.DoctorCategoriesActivity" />
-        <activity android:name=".Adapter.BookAppointmentActivity"></activity>
+        <activity android:name=".view.BookAppointmentActivity"></activity>
         <activity android:name=".view.PatientPrescription"></activity>
     </application>
 

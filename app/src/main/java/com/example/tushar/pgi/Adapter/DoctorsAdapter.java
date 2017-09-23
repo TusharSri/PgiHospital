@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.tushar.pgi.R;
 import com.example.tushar.pgi.model.DoctorModel;
+import com.example.tushar.pgi.view.BookAppointmentActivity;
 
 import java.util.ArrayList;
 

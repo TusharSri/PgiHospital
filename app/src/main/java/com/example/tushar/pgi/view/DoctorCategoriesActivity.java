@@ -24,8 +24,8 @@ public class DoctorCategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctors_list);
 
-        ArrayList<String> categories = getData();
-        setRecyclerView(categories);
+        getAndSetData();
+
     }
 
     /**
@@ -41,28 +41,30 @@ public class DoctorCategoriesActivity extends AppCompatActivity {
     /**
      * This method gets the types of doctors from the database
      */
-    private ArrayList<String> getData() {
+    private void getAndSetData() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("doctors");
 
-        final ArrayList<String> categories = new ArrayList<>();
+
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> categories = new ArrayList<>();
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     DoctorModel doctorModel = child.getValue(DoctorModel.class);
                     if(!categories.contains(doctorModel.getType())){
                         categories.add(doctorModel.getType());
                     }
                 }
+                setRecyclerView(categories);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
-        return categories;
+
+
     }
 }

@@ -28,27 +28,31 @@ public class DoctorsListActivity extends AppCompatActivity {
 
         String type = getIntent().getStringExtra("type");
 
-        ArrayList<DoctorModel> doctors = getAllDoctorsOfaParticularType(type);
+        getAllDoctorsOfaParticularType(type);
 
-        setRecyclerView(doctors);
     }
 
     /**
      *  This method gets all the doctors of the type given
      * @param type
      */
-    private ArrayList<DoctorModel> getAllDoctorsOfaParticularType(String type) {
+    private void getAllDoctorsOfaParticularType(final String type) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("doctors");
-
-        final ArrayList<DoctorModel> doctorModelArrayList = new ArrayList<>();
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<DoctorModel> doctorModelArrayList = new ArrayList<>();
+
                 for (DataSnapshot child : dataSnapshot.getChildren()){
-                    doctorModelArrayList.add(child.getValue(DoctorModel.class));
+                    DoctorModel doctor = child.getValue(DoctorModel.class);
+                    if(doctor.getType().equalsIgnoreCase(type)) {
+                        doctorModelArrayList.add(doctor);
+                    }
                 }
+
+                setRecyclerView(doctorModelArrayList);
             }
 
             @Override
@@ -56,8 +60,6 @@ public class DoctorsListActivity extends AppCompatActivity {
 
             }
         });
-
-        return doctorModelArrayList;
     }
 
     /**

@@ -23,7 +23,7 @@
             android:layout_toRightOf="@+id/imageview_patient"
             android:padding="5dp"
             android:text="Patient Name"
-            android:textSize="17dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -111,7 +111,17 @@
 
     </RelativeLayout>
 
+    <ImageButton
+        android:id="@+id/floating_button_doctor"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_above="@+id/rr_buttons"
+        android:background="@drawable/floating_button" />
+
     <RelativeLayout
+        android:id="@+id/rr_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -121,9 +131,11 @@
             android:id="@+id/button_add_prescription"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Add Prescreption   ->"
+            android:text="Add prescription"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#c1efe7"
             android:textSize="20dp" />
 
         <Button
@@ -133,7 +145,8 @@
             android:layout_below="@+id/button_add_prescription"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Medical History  ->"
+            android:text="Medical History"
+            android:background="#c1efe7"
             android:textSize="20dp" />
 
         <Button
@@ -142,7 +155,7 @@
             android:layout_height="50dp"
             android:layout_below="@+id/button_medical_history"
             android:layout_margin="10dp"
-            android:background="@android:color/holo_red_light"
+            android:background="#ef3b3b"
             android:text="Cancel this Appointment"
             android:textSize="20dp" />
 
@@ -153,9 +166,10 @@
             android:layout_below="@+id/button_cancel_appointment"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@android:color/holo_green_dark"
+            android:background="#075103"
             android:text="Mark as done"
             android:textSize="20dp" />
 
     </RelativeLayout>
+
 </RelativeLayout>

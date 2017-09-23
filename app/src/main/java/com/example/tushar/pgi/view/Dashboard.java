@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.provider.AlarmClock;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
@@ -46,14 +45,10 @@ public class Dashboard extends AppCompatActivity {
     private String uid;
     private TextToSpeech tts;
     private List<Appointment> todaysAppointments;
-    private String name;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private static final String PREFS = "prefs";
-    private static final String NEW = "new";
     private static final String NAME = "name";
-    private static final String AGE = "age";
-    private static final String AS_NAME = "as_name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,16 +205,7 @@ public class Dashboard extends AppCompatActivity {
                     if (isDoctor) {
                         preferences = getSharedPreferences(PREFS, 0);
                         editor = preferences.edit();
-                        if (result.get(0).contains("appointment")) {
-                            speak("These are your Today's Appointment");
-                            expListView = (ExpandableListView) findViewById(R.id.lvExp);
-                            listAdapter = new ExpandableListAdapter(this, todaysAppointments);
-                            expListView.setAdapter(listAdapter);
-                        } else if (result.get(0).contains("leave")) {
-                            speak("Leave Applied");
-                        } else {
-                            recognition(result.get(0));
-                        }
+                        recognition(result.get(0));
                     } else {
                         if (result.get(0).contains("appointment")) {
                             Toast.makeText(this, "appointment booked", Toast.LENGTH_SHORT).show();
@@ -259,12 +245,13 @@ public class Dashboard extends AppCompatActivity {
         }
 
         if (text.contains("my name is")) {
-            name = speech[speech.length - 1];
+            String name = speech[speech.length - 1];
             Log.e("THIS", "" + name);
             editor.putString(NAME, name).apply();
+            speak("what can i do for you " + preferences.getString(NAME, null));
         }
 
-        if (text.contains("what time is it")) {
+        if (text.contains("what") && text.contains("time")) {
             SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm");//dd/MM/yyyy
             Date now = new Date();
             String[] strDate = sdfDate.format(now).split(":");
@@ -273,12 +260,67 @@ public class Dashboard extends AppCompatActivity {
             speak("The time is " + sdfDate.format(now));
         }
 
-        if (text.contains("thank you")) {
+        if (text.contains("thank you") || text.contains("thanks")) {
             speak("Your Welcome " + preferences.getString(NAME, null));
         }
 
-        if (text.contains("what is my name")) {
+        if (text.contains("leave")) {
+            speak("For which date you want to apply leave " + preferences.getString(NAME, null));
+        }
+
+        if (text.contains("what") && text.contains("my name")) {
             speak("Your name is " + preferences.getString(NAME, null));
+        }
+
+        if (text.contains("read") || text.contains("repeat")) {
+            if (text.contains("first")) {
+                speak("First Appointment is of " + todaysAppointments.get(0).getName() +
+                        "in building number" + todaysAppointments.get(0).getBuildingNumber() +
+                        " The patient is suffering from " + todaysAppointments.get(0).getDescription());
+            }
+            if (text.contains("second")) {
+                speak("second Appointment is of " + todaysAppointments.get(1).getName() +
+                        "in building number" + todaysAppointments.get(1).getBuildingNumber() +
+                        " The patient is suffering from " + todaysAppointments.get(1).getDescription());
+            }
+            if (text.contains("third")) {
+                speak("third Appointment is of " + todaysAppointments.get(1).getName() +
+                        "in building number" + todaysAppointments.get(1).getBuildingNumber() +
+                        " The patient is suffering from " + todaysAppointments.get(1).getDescription());
+            }
+        }
+
+        if (text.contains("open") || text.contains("details")) {
+            if (text.contains("first")) {
+                Intent patientdetail = new Intent(this, PatientPrescription.class);
+                patientdetail.putExtra("patient_data", todaysAppointments.get(0));
+                startActivity(patientdetail);
+            }
+            if (text.contains("second")) {
+                Intent patientdetail = new Intent(this, PatientPrescription.class);
+                patientdetail.putExtra("patient_data", todaysAppointments.get(1));
+                startActivity(patientdetail);
+            }
+            if (text.contains("third")) {
+                Intent patientdetail = new Intent(this, PatientPrescription.class);
+                patientdetail.putExtra("patient_data", todaysAppointments.get(2));
+                startActivity(patientdetail);
+            }
+        }
+
+        if (text.contains("appointment") && text.contains("today")) {
+            speak("These are your Today's Appointment" + preferences.getString(NAME, null));
+            expListView = (ExpandableListView) findViewById(R.id.lvExp);
+            listAdapter = new ExpandableListAdapter(this, todaysAppointments);
+            expListView.setAdapter(listAdapter);
+        }
+
+        if (text.contains("yesterday")) {
+            speak("sorry we are unable to fetch appointments for yesterday");
+        }
+
+        if (text.contains("tomorrow")) {
+            speak("sorry we are unable to fetch appointments for tommorow");
         }
     }
 }

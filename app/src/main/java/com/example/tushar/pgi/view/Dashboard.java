@@ -122,11 +122,6 @@ public class Dashboard extends AppCompatActivity {
 
     private void setLayoutOfDashboard(boolean isDoctor) {
         if (isDoctor) {
-            expListView = (ExpandableListView) findViewById(R.id.lvExp);
-            prepareListData();
-            listAdapter = new ExpandableListAdapter(this, patientName, patientDetails,
-                    buildingNumber, floorNumber, roomNumber, bedNumber, patientTime, patientImage);
-            expListView.setAdapter(listAdapter);
             ImageView doctorFloatingButton = (ImageView) findViewById(R.id.floating_button_doctor);
             doctorFloatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -228,7 +223,12 @@ public class Dashboard extends AppCompatActivity {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     if (isDoctor) {
                         if (result.get(0).contains("appointment")) {
-                            speak("todays Appointment shown to doctor");
+                            speak("These are your Today's Appointment");
+                            expListView = (ExpandableListView) findViewById(R.id.lvExp);
+                            prepareListData();
+                            listAdapter = new ExpandableListAdapter(this, patientName, patientDetails,
+                                    buildingNumber, floorNumber, roomNumber, bedNumber, patientTime, patientImage);
+                            expListView.setAdapter(listAdapter);
                         } else if (result.get(0).contains("leave")) {
                             speak("Leave Applied");
                         }

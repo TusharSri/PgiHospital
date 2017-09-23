@@ -33,9 +33,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -45,14 +42,6 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
     private final int REQ_CODE_SPEECH_INPUT = 100;
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
-    List<String> patientName;
-    List<String> buildingNumber;
-    List<String> floorNumber;
-    List<String> roomNumber;
-    List<String> bedNumber;
-    List<String> patientTime;
-    List<Integer> patientImage;
-    HashMap<String, List<String>> patientDetails;
     private String uid;
     private TextToSpeech tts;
 
@@ -66,12 +55,12 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
 
 
         if (type.equalsIgnoreCase("doctor")) {
-            getDoctorData();
             isDoctor = true;
+            getDoctorData();
         } else {
             isDoctor = false;
+            setLayoutOfDashboard(false, null);
         }
-        setLayoutOfDashboard(isDoctor);
     }
 
 
@@ -118,19 +107,25 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
                 todaysAppointments.add(appointment);
             }
         }
+
+        setLayoutOfDashboard(true, todaysAppointments);
+
     }
 
-    private void setLayoutOfDashboard(boolean isDoctor) {
+    private void setLayoutOfDashboard(boolean isDoctor, List<Appointment>  appointments) {
         if (isDoctor) {
             setContentView(R.layout.activity_dashboard_doctor);
             tts = new TextToSpeech(this, this);
             expListView = (ExpandableListView) findViewById(R.id.lvExp);
-            prepareListData();
             speakOut("ten");
-            listAdapter = new ExpandableListAdapter(this, patientName, patientDetails,
-                    buildingNumber, floorNumber, roomNumber, bedNumber, patientTime, patientImage);
+
+            listAdapter = new ExpandableListAdapter(this, appointments);
             expListView.setAdapter(listAdapter);
+
+
+
             ImageView doctorFloatingButton = (ImageView) findViewById(R.id.floating_button_doctor);
+
             doctorFloatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -167,12 +162,6 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
         return listViewItems;
     }
 
-    private List<PatientCard> getPatientCardData() {
-        List<PatientCard> listViewItems = new ArrayList<>();
-        listViewItems.add(new PatientCard("Tushar", "b4", "f1", "r1", "be1", "d1", R.mipmap.ic_launcher));
-        listViewItems.add(new PatientCard("Tushar", "b4", "f1", "r1", "be1", "d1", R.mipmap.ic_launcher));
-        return listViewItems;
-    }
 
     /**
      * Showing google speech input dialog
@@ -225,57 +214,6 @@ public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitL
                 break;
             }
         }
-    }
-
-    /*
-    * Preparing the list data
-    */
-    private void prepareListData() {
-        patientName = new ArrayList<String>();
-        patientTime = new ArrayList<String>();
-        buildingNumber = new ArrayList<String>();
-        floorNumber = new ArrayList<String>();
-        roomNumber = new ArrayList<String>();
-        bedNumber = new ArrayList<String>();
-        patientImage = new ArrayList<Integer>();
-        patientDetails = new HashMap<String, List<String>>();
-
-        // Adding Parent data
-        patientName.add("Patient 1");
-        patientName.add("Patient 2");
-        patientName.add("Patient 3");
-        patientTime.add("10:11");
-        patientTime.add("11:12");
-        patientTime.add("12:13");
-        buildingNumber.add("b1");
-        buildingNumber.add("b2");
-        buildingNumber.add("b3");
-        floorNumber.add("f1");
-        floorNumber.add("f2");
-        floorNumber.add("f3");
-        roomNumber.add("r1");
-        roomNumber.add("r2");
-        roomNumber.add("r3");
-        bedNumber.add("be1");
-        bedNumber.add("be2");
-        bedNumber.add("be3");
-        patientImage.add(R.mipmap.ic_launcher);
-        patientImage.add(R.mipmap.ic_launcher);
-        patientImage.add(R.mipmap.ic_launcher);
-        // Adding child data
-        List<String> desc1 = new ArrayList<String>();
-        desc1.add("here we are showing the desises description r something else.............................");
-
-        List<String> desc2 = new ArrayList<String>();
-        desc2.add("here we are showing the desises description r something else...............................");
-
-        List<String> desc3 = new ArrayList<String>();
-        desc3.add("here we are showing the desises description r something else.....................................");
-
-        patientDetails.put(patientName.get(0), desc1); // Header, Child data
-        patientDetails.put(patientName.get(1), desc2);
-        patientDetails.put(patientName.get(2), desc3);
-
     }
 
     @Override

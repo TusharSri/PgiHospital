@@ -3,6 +3,7 @@ package com.example.tushar.pgi.Adapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
 
     private String selectedDateText = "";
     private String[] leaveArray;
+    private String[] timeSlotsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,14 @@ public class BookAppointmentActivity extends AppCompatActivity {
 
         DoctorModel doctor = (DoctorModel) getIntent().getSerializableExtra("doctor");
 
+        //String timeSlots = ";
+        //timeSlotsArray =timeSlots.split(",");
+
         String leaves = doctor.getUpcomingLeaves();
         leaveArray = leaves.split(",");
+
+
+
 
 
         final DatePicker datePicker = (DatePicker) findViewById(R.id.date_picker);

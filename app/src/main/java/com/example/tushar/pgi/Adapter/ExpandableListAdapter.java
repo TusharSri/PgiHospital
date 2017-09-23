@@ -14,9 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tushar.pgi.R;
+import com.example.tushar.pgi.model.Appointment;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
+    private final List<Appointment> appointments;
     private Context _context;
     private List<String> patientName;
     private List<String> buildingNumber;
@@ -27,10 +29,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private List<Integer> patientImage;
     private HashMap<String, List<String>> patientDetails;
 
-    public ExpandableListAdapter(Context context, List<String> patientName, HashMap<String, List<String>> patientDetails,
-                                 List<String> buildingNumber, List<String> floorNumber, List<String> roomNumber,
-                                 List<String> bedNumber, List<String> patientTime, List<Integer> patientImage) {
+    public ExpandableListAdapter(Context context,List<Appointment>  appointments) {
         this._context = context;
+        this.appointments=appointments;
         this.patientName = patientName;
         this.patientDetails = patientDetails;
         this.buildingNumber = buildingNumber;
@@ -43,7 +44,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this.patientDetails.get(this.patientName.get(groupPosition)).get(childPosititon);
+        return appointments.get(groupPosition).getDescription();
     }
 
     @Override
@@ -63,72 +64,50 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.patient_expanded_desc, null);
         }
 
-        TextView patientDesc = (TextView) convertView.findViewById(R.id.text_patient_details);
-        ImageView patientImage = (ImageView) convertView.findViewById(R.id.imageview_patient);
-        Button taskCompleted = (Button) convertView.findViewById(R.id.button_done);
-        Button taskNotCompleted = (Button) convertView.findViewById(R.id.button_not_done);
-        patientImage.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(_context, "child clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-        patientDesc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(_context, "child clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-        taskCompleted.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(_context, "done", Toast.LENGTH_SHORT).show();
-            }
-        });
-        taskNotCompleted.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(_context, "not done", Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                Toast.makeText(_context, "awefawefweaf", Toast.LENGTH_SHORT).show();
             }
         });
 
-        patientDesc.setText(childText);
+        TextView patientDesc = (TextView) convertView.findViewById(R.id.text_patient_details);
+        ImageView patientImage = (ImageView) convertView.findViewById(R.id.imageview_patient);
+
+//        Button taskCompleted = (Button) convertView.findViewById(R.id.button_done);
+//        Button taskNotCompleted = (Button) convertView.findViewById(R.id.button_not_done);
+//        taskCompleted.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(_context, "done", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        taskNotCompleted.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(_context, "not done", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        patientDesc.setText(appointments.get(groupPosition).getDescription());
         patientImage.setImageResource(R.mipmap.ic_launcher);
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.patientDetails.get(this.patientName.get(groupPosition))
-                .size();
+        return 1;
     }
 
-    public Object getGroup(int groupPosition, String arg) {
-        if (arg.equals("name")) {
-            return this.patientName.get(groupPosition);
-        } else if (arg.equals("building")) {
-            return this.buildingNumber.get(groupPosition);
-        } else if (arg.equals("floor")) {
-            return this.floorNumber.get(groupPosition);
-        } else if (arg.equals("room")) {
-            return this.roomNumber.get(groupPosition);
-        } else if (arg.equals("bed")) {
-            return this.bedNumber.get(groupPosition);
-        } else if (arg.equals("time")) {
-            return this.patientTime.get(groupPosition);
-        } else {
-            return this.patientName.get(groupPosition);
-        }
-    }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return this.patientName.get(groupPosition);
+        return appointments.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return this.patientName.size();
+        return appointments.size();
     }
 
     @Override
@@ -139,12 +118,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        String patientNm = (String) getGroup(groupPosition, "name");
-        String buildingNum = (String) getGroup(groupPosition, "building");
-        String floorNum = (String) getGroup(groupPosition, "floor");
-        String roomNum = (String) getGroup(groupPosition, "room");
-        String bedNum = (String) getGroup(groupPosition, "bed");
-        String patientTm = (String) getGroup(groupPosition, "time");
+
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -158,12 +132,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView bedNumber = (TextView) convertView.findViewById(R.id.text_bed_number);
         TextView patientTime = (TextView) convertView.findViewById(R.id.text_timing);
 
-        patientName.setText(patientNm);
-        buildingNumber.setText(buildingNum);
-        floorNumber.setText(floorNum);
-        roomNumber.setText(roomNum);
-        bedNumber.setText(bedNum);
-        patientTime.setText(patientTm);
+        patientName.setText(appointments.get(groupPosition).getName());
+        buildingNumber.setText(appointments.get(groupPosition).getBuildingNumber());
+        floorNumber.setText(appointments.get(groupPosition).getFloorNumber());
+        roomNumber.setText(appointments.get(groupPosition).getRoomNumber());
+        bedNumber.setText(appointments.get(groupPosition).getBedNumber());
+        patientTime.setText(appointments.get(groupPosition).getTimeSlot());
 
         return convertView;
     }

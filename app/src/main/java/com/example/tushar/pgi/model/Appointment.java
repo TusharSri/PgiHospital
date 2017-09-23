@@ -14,6 +14,7 @@ public class Appointment implements Serializable{
     private String floorNumber;
     private String roomNumber;
     private String bedNumber;
+    private String description;
 
     /**
      * No args constructor for use in serialization
@@ -22,20 +23,7 @@ public class Appointment implements Serializable{
     public Appointment() {
     }
 
-    /**
-     *
-     * @param uid
-     * @param bedNumber
-     * @param roomNumber
-     * @param floorNumber
-     * @param name
-     * @param date
-     * @param appointmentType
-     * @param buildingNumber
-     * @param timeSlot
-     */
-    public Appointment(String name, String appointmentType, String date, String timeSlot, String uid, String buildingNumber, String floorNumber, String roomNumber, String bedNumber) {
-        super();
+    private Appointment(String name, String appointmentType, String date, String timeSlot, String uid, String buildingNumber, String floorNumber, String roomNumber, String bedNumber, String description) {
         this.name = name;
         this.appointmentType = appointmentType;
         this.date = date;
@@ -45,6 +33,15 @@ public class Appointment implements Serializable{
         this.floorNumber = floorNumber;
         this.roomNumber = roomNumber;
         this.bedNumber = bedNumber;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {

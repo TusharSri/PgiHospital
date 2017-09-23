@@ -3,8 +3,10 @@ package com.example.tushar.pgi.view;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -32,18 +34,27 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class Dashboard extends AppCompatActivity {
+public class Dashboard extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
     Boolean isDoctor;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
+    List<String> patientName;
+    List<String> buildingNumber;
+    List<String> floorNumber;
+    List<String> roomNumber;
+    List<String> bedNumber;
+    List<String> patientTime;
+    List<Integer> patientImage;
+    HashMap<String, List<String>> patientDetails;
     private String uid;
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +68,15 @@ public class Dashboard extends AppCompatActivity {
         if (type.equalsIgnoreCase("doctor")) {
             getDoctorData();
             isDoctor = true;
-        } else{
+        } else {
             isDoctor = false;
         }
         setLayoutOfDashboard(isDoctor);
     }
 
 
-
     /**
-     *  This method gets the data of the particular doctor
+     * This method gets the data of the particular doctor
      */
     private void getDoctorData() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -77,7 +87,7 @@ public class Dashboard extends AppCompatActivity {
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
                     DoctorModel model = child.getValue(DoctorModel.class);
                     showAppointments(model);
                 }
@@ -92,6 +102,7 @@ public class Dashboard extends AppCompatActivity {
 
     /**
      * This method brings out all the appointments and shows them to the user
+     *
      * @param model
      */
     private void showAppointments(DoctorModel model) {
@@ -102,8 +113,8 @@ public class Dashboard extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
         String currentDate = dateFormat.format(date);
 
-        for (Appointment appointment : listOfAppointments){
-            if (appointment.getDate().equalsIgnoreCase(currentDate)){
+        for (Appointment appointment : listOfAppointments) {
+            if (appointment.getDate().equalsIgnoreCase(currentDate)) {
                 todaysAppointments.add(appointment);
             }
         }
@@ -112,23 +123,13 @@ public class Dashboard extends AppCompatActivity {
     private void setLayoutOfDashboard(boolean isDoctor) {
         if (isDoctor) {
             setContentView(R.layout.activity_dashboard_doctor);
-
-            // get the listview
+            tts = new TextToSpeech(this, this);
             expListView = (ExpandableListView) findViewById(R.id.lvExp);
-
-            // preparing list data
             prepareListData();
-
-            listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
-
-            // setting list adapter
+            speakOut("ten");
+            listAdapter = new ExpandableListAdapter(this, patientName, patientDetails,
+                    buildingNumber, floorNumber, roomNumber, bedNumber, patientTime, patientImage);
             expListView.setAdapter(listAdapter);
-
-            List<PatientCard> patientCardData = getPatientCardData();
-           /* CardRecyclerViewAdapter recyclerViewArrayAdapter = new CardRecyclerViewAdapter(patientCardData, getApplicationContext());
-            RecyclerView simpleRecyclerView = (RecyclerView) findViewById(R.id.tast_recyclerview);
-            simpleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            simpleRecyclerView.setAdapter(recyclerViewArrayAdapter);*/
             ImageView doctorFloatingButton = (ImageView) findViewById(R.id.floating_button_doctor);
             doctorFloatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -230,26 +231,83 @@ public class Dashboard extends AppCompatActivity {
     * Preparing the list data
     */
     private void prepareListData() {
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        patientName = new ArrayList<String>();
+        patientTime = new ArrayList<String>();
+        buildingNumber = new ArrayList<String>();
+        floorNumber = new ArrayList<String>();
+        roomNumber = new ArrayList<String>();
+        bedNumber = new ArrayList<String>();
+        patientImage = new ArrayList<Integer>();
+        patientDetails = new HashMap<String, List<String>>();
 
         // Adding Parent data
-        listDataHeader.add("Patient 1");
-        listDataHeader.add("Patient 2");
-        listDataHeader.add("Patient 3");
-
+        patientName.add("Patient 1");
+        patientName.add("Patient 2");
+        patientName.add("Patient 3");
+        patientTime.add("10:11");
+        patientTime.add("11:12");
+        patientTime.add("12:13");
+        buildingNumber.add("b1");
+        buildingNumber.add("b2");
+        buildingNumber.add("b3");
+        floorNumber.add("f1");
+        floorNumber.add("f2");
+        floorNumber.add("f3");
+        roomNumber.add("r1");
+        roomNumber.add("r2");
+        roomNumber.add("r3");
+        bedNumber.add("be1");
+        bedNumber.add("be2");
+        bedNumber.add("be3");
+        patientImage.add(R.mipmap.ic_launcher);
+        patientImage.add(R.mipmap.ic_launcher);
+        patientImage.add(R.mipmap.ic_launcher);
         // Adding child data
-        List<String> top250 = new ArrayList<String>();
-        top250.add("The Shawshank Redemption");
+        List<String> desc1 = new ArrayList<String>();
+        desc1.add("here we are showing the desises description r something else.............................");
 
-        List<String> nowShowing = new ArrayList<String>();
-        nowShowing.add("The Conjuring");
+        List<String> desc2 = new ArrayList<String>();
+        desc2.add("here we are showing the desises description r something else...............................");
 
-        List<String> comingSoon = new ArrayList<String>();
-        comingSoon.add("2 Guns");
+        List<String> desc3 = new ArrayList<String>();
+        desc3.add("here we are showing the desises description r something else.....................................");
 
-        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), nowShowing);
-        listDataChild.put(listDataHeader.get(2), comingSoon);
+        patientDetails.put(patientName.get(0), desc1); // Header, Child data
+        patientDetails.put(patientName.get(1), desc2);
+        patientDetails.put(patientName.get(2), desc3);
+
+    }
+
+    @Override
+    public void onInit(int status) {
+        if (status == TextToSpeech.SUCCESS) {
+
+            int result = tts.setLanguage(Locale.US);
+
+            if (result == TextToSpeech.LANG_MISSING_DATA
+                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "This Language is not supported");
+            } else {
+                speakOut("zero");
+            }
+
+        } else {
+            Log.e("TTS", "Initilization Failed!");
+        }
+    }
+
+    private void speakOut(String number) {
+        String text = "You have total of " + number + " appointments today";
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    @Override
+    public void onDestroy() {
+        // Don't forget to shutdown tts!
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
     }
 }

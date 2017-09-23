@@ -5,5 +5,16 @@
     <string name="speech_prompt">Say something&#8230;</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
     <string name="tap_on_mic">Tap on mic to speak</string>
+    <string-array name="time_slots">
+        <item>1000-1030</item>
+        <item>1030-1100</item>
+        <item>1030-1100</item>
+        <item>1100-1130</item>
+        <item>1130-1200</item>
+        <item>1500-1530</item>
+        <item>1600-1630</item>
+    </string-array>
+
+
 
 </resources>

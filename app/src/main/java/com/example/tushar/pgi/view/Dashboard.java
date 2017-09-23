@@ -1,4 +1,4 @@
-package com.example.tushar.pgi;
+package com.example.tushar.pgi.view;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -14,10 +15,22 @@ import android.widget.Toast;
 
 import com.example.tushar.pgi.Adapter.ExpandableListAdapter;
 import com.example.tushar.pgi.Adapter.ItemRecyclerViewAdapter;
+import com.example.tushar.pgi.R;
+import com.example.tushar.pgi.model.Appointment;
+import com.example.tushar.pgi.model.DoctorModel;
 import com.example.tushar.pgi.model.ItemObjects;
 import com.example.tushar.pgi.model.PatientCard;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -28,28 +41,72 @@ public class Dashboard extends AppCompatActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
-    List<String> patientName;
-    List<String> buildingNumber;
-    List<String> floorNumber;
-    List<String> roomNumber;
-    List<String> bedNumber;
-    List<String> patientTime;
-    List<Integer> patientImage;
-    HashMap<String, List<String>> patientDetails;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent loginIntent = getIntent();
-        String qrCode = loginIntent.getStringExtra("scannedQR");
-        String aadharNumber = loginIntent.getStringExtra("aadharNumber");
-        if (qrCode.equals("111122223333") || aadharNumber.equals("111122223333")) {
+        uid = loginIntent.getStringExtra("uid");
+        String type = loginIntent.getStringExtra("type");
+
+
+        if (type.equalsIgnoreCase("doctor")) {
+            getDoctorData();
             isDoctor = true;
-        } else if (qrCode.equals("999988887777") || aadharNumber.equals("999988887777")) {
+        } else{
             isDoctor = false;
         }
         setLayoutOfDashboard(isDoctor);
+    }
+
+
+
+    /**
+     *  This method gets the data of the particular doctor
+     */
+    private void getDoctorData() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("doctors");
+
+        Query queryRef = myRef.orderByChild("uid").equalTo(uid);
+
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    DoctorModel model = child.getValue(DoctorModel.class);
+                    showAppointments(model);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /**
+     * This method brings out all the appointments and shows them to the user
+     * @param model
+     */
+    private void showAppointments(DoctorModel model) {
+        List<Appointment> todaysAppointments = new ArrayList<>();
+        List<Appointment> listOfAppointments = model.getAppointments();
+
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
+        String currentDate = dateFormat.format(date);
+
+        for (Appointment appointment : listOfAppointments){
+            if (appointment.getDate().equalsIgnoreCase(currentDate)){
+                todaysAppointments.add(appointment);
+            }
+        }
     }
 
     private void setLayoutOfDashboard(boolean isDoctor) {
@@ -62,7 +119,7 @@ public class Dashboard extends AppCompatActivity {
             // preparing list data
             prepareListData();
 
-            listAdapter = new ExpandableListAdapter(this, patientName, patientDetails, buildingNumber, floorNumber, roomNumber, bedNumber, patientTime, patientImage);
+            listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 
             // setting list adapter
             expListView.setAdapter(listAdapter);
@@ -173,50 +230,26 @@ public class Dashboard extends AppCompatActivity {
     * Preparing the list data
     */
     private void prepareListData() {
-        patientName = new ArrayList<String>();
-        patientTime = new ArrayList<String>();
-        buildingNumber = new ArrayList<String>();
-        floorNumber = new ArrayList<String>();
-        roomNumber = new ArrayList<String>();
-        bedNumber = new ArrayList<String>();
-        patientImage = new ArrayList<Integer>();
-        patientDetails = new HashMap<String, List<String>>();
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
 
         // Adding Parent data
-        patientName.add("Patient 1");
-        patientName.add("Patient 2");
-        patientName.add("Patient 3");
-        patientTime.add("10:11");
-        patientTime.add("11:12");
-        patientTime.add("12:13");
-        buildingNumber.add("b1");
-        buildingNumber.add("b2");
-        buildingNumber.add("b3");
-        floorNumber.add("f1");
-        floorNumber.add("f2");
-        floorNumber.add("f3");
-        roomNumber.add("r1");
-        roomNumber.add("r2");
-        roomNumber.add("r3");
-        bedNumber.add("be1");
-        bedNumber.add("be2");
-        bedNumber.add("be3");
-        patientImage.add(R.mipmap.ic_launcher);
-        patientImage.add(R.mipmap.ic_launcher);
-        patientImage.add(R.mipmap.ic_launcher);
+        listDataHeader.add("Patient 1");
+        listDataHeader.add("Patient 2");
+        listDataHeader.add("Patient 3");
+
         // Adding child data
-        List<String> desc1 = new ArrayList<String>();
-        desc1.add("here we are showing the desises description r something else.............................");
+        List<String> top250 = new ArrayList<String>();
+        top250.add("The Shawshank Redemption");
 
-        List<String> desc2 = new ArrayList<String>();
-        desc2.add("here we are showing the desises description r something else...............................");
+        List<String> nowShowing = new ArrayList<String>();
+        nowShowing.add("The Conjuring");
 
-        List<String> desc3 = new ArrayList<String>();
-        desc3.add("here we are showing the desises description r something else.....................................");
+        List<String> comingSoon = new ArrayList<String>();
+        comingSoon.add("2 Guns");
 
-        patientDetails.put(patientName.get(0), desc1); // Header, Child data
-        patientDetails.put(patientName.get(1), desc2);
-        patientDetails.put(patientName.get(2), desc3);
-
+        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
+        listDataChild.put(listDataHeader.get(1), nowShowing);
+        listDataChild.put(listDataHeader.get(2), comingSoon);
     }
 }

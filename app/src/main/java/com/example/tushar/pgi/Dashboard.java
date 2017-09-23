@@ -33,6 +33,7 @@ public class Dashboard extends AppCompatActivity {
     List<String> floorNumber;
     List<String> roomNumber;
     List<String> bedNumber;
+
     List<String> patientTime;
     List<Integer> patientImage;
     HashMap<String, List<String>> patientDetails;

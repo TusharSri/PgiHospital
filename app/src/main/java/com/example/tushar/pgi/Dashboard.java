@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -14,10 +16,22 @@ import android.widget.Toast;
 
 import com.example.tushar.pgi.Adapter.ExpandableListAdapter;
 import com.example.tushar.pgi.Adapter.ItemRecyclerViewAdapter;
+import com.example.tushar.pgi.model.Appointment;
+import com.example.tushar.pgi.model.DoctorModel;
 import com.example.tushar.pgi.model.ItemObjects;
 import com.example.tushar.pgi.model.PatientCard;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -42,14 +56,63 @@ public class Dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent loginIntent = getIntent();
-        String qrCode = loginIntent.getStringExtra("scannedQR");
-        String aadharNumber = loginIntent.getStringExtra("aadharNumber");
-        if (qrCode.equals("111122223333") || aadharNumber.equals("111122223333")) {
+        uid = loginIntent.getStringExtra("uid");
+        String type = loginIntent.getStringExtra("type");
+
+
+        if (type.equalsIgnoreCase("doctor")) {
+            getDoctorData();
             isDoctor = true;
-        } else if (qrCode.equals("999988887777") || aadharNumber.equals("999988887777")) {
+        } else{
             isDoctor = false;
         }
         setLayoutOfDashboard(isDoctor);
+    }
+
+
+
+    /**
+     *  This method gets the data of the particular doctor
+     */
+    private void getDoctorData() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("doctors");
+
+        Query queryRef = myRef.orderByChild("uid").equalTo(uid);
+
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    DoctorModel model = child.getValue(DoctorModel.class);
+                    Date date = new Date();
+                    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
+                    String a = dateFormat.format(date);
+                    Toast.makeText(Dashboard.this, a, Toast.LENGTH_SHORT).show();
+
+                    Query aa =child.getRef().orderByChild("appointment").getRef().orderByChild("date").equalTo(a);
+                    aa.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot childd : dataSnapshot.getChildren()){
+                                Log.e("awefwefawefawefawefewf",childd.getValue().toString());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void setLayoutOfDashboard(boolean isDoctor) {

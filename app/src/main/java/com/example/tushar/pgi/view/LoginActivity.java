@@ -1,4 +1,4 @@
-package com.example.tushar.pgi;
+package com.example.tushar.pgi.view;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.tushar.pgi.R;
 import com.example.tushar.pgi.model.LoginModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

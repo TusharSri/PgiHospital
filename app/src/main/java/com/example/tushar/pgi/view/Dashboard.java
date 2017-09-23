@@ -1,4 +1,4 @@
-package com.example.tushar.pgi;
+package com.example.tushar.pgi.view;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.tushar.pgi.Adapter.ExpandableListAdapter;
 import com.example.tushar.pgi.Adapter.ItemRecyclerViewAdapter;
+import com.example.tushar.pgi.R;
 import com.example.tushar.pgi.model.Appointment;
 import com.example.tushar.pgi.model.DoctorModel;
 import com.example.tushar.pgi.model.ItemObjects;

@@ -2,33 +2,57 @@
 package com.example.tushar.pgi.model;
 
 
-public class Appointment {
+import java.io.Serializable;
+public class Appointment implements Serializable{
 
+    private String name;
     private String appointmentType;
     private String date;
     private String timeSlot;
     private String uid;
+    private String buildingNumber;
+    private String floorNumber;
+    private String roomNumber;
+    private String bedNumber;
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public Appointment() {
     }
 
     /**
-     * 
+     *
      * @param uid
+     * @param bedNumber
+     * @param roomNumber
+     * @param floorNumber
+     * @param name
      * @param date
      * @param appointmentType
+     * @param buildingNumber
      * @param timeSlot
      */
-    public Appointment(String appointmentType, String date, String timeSlot, String uid) {
+    public Appointment(String name, String appointmentType, String date, String timeSlot, String uid, String buildingNumber, String floorNumber, String roomNumber, String bedNumber) {
         super();
+        this.name = name;
         this.appointmentType = appointmentType;
         this.date = date;
         this.timeSlot = timeSlot;
         this.uid = uid;
+        this.buildingNumber = buildingNumber;
+        this.floorNumber = floorNumber;
+        this.roomNumber = roomNumber;
+        this.bedNumber = bedNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAppointmentType() {
@@ -61,6 +85,38 @@ public class Appointment {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getBuildingNumber() {
+        return buildingNumber;
+    }
+
+    public void setBuildingNumber(String buildingNumber) {
+        this.buildingNumber = buildingNumber;
+    }
+
+    public String getFloorNumber() {
+        return floorNumber;
+    }
+
+    public void setFloorNumber(String floorNumber) {
+        this.floorNumber = floorNumber;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public String getBedNumber() {
+        return bedNumber;
+    }
+
+    public void setBedNumber(String bedNumber) {
+        this.bedNumber = bedNumber;
     }
 
 }

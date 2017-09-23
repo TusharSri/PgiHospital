@@ -1,6 +1,7 @@
 package com.example.tushar.pgi.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 import com.example.tushar.pgi.R;
 import com.example.tushar.pgi.model.ItemObjects;
+import com.example.tushar.pgi.view.DoctorCategoriesActivity;
+
 import java.util.List;
 
 /**
@@ -45,7 +48,13 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder
         holder.countryPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "categry is "+itemList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                if(itemList.get(position).getName().equalsIgnoreCase("Book Appointment")){
+                    Intent intent = new Intent(context, DoctorCategoriesActivity.class);
+                    context.startActivity(intent);
+                }else{
+                    Toast.makeText(context, "categry is "+itemList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

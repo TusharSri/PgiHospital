@@ -30,18 +30,23 @@ public class DoctorCategoriesAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        return new DoctorCategoriesViewHolder(inflater.inflate(R.layout.categories_item_view, parent , false));
+        return new DoctorCategoriesViewHolder(inflater.inflate(R.layout.categories_item_view, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ((DoctorCategoriesViewHolder)holder).categoryName.setText(categories.get(position));
-        ((DoctorCategoriesViewHolder)holder).itemView.setOnClickListener(new View.OnClickListener() {
+        String hindiList;
+        if (categories.get(position).equals("Orthopedic")) {
+            hindiList = "हड्डी रोग विशेषज्ञ";
+        } else {
+            hindiList = "हृदय रोग विशेषज्ञ";
+        }
+        ((DoctorCategoriesViewHolder) holder).categoryName.setText(hindiList);
+        ((DoctorCategoriesViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View pView) {
-                //Toast.makeText(context, categories[position], Toast.LENGTH_SHORT).show();
                 Intent doctorsIntent = new Intent(context, DoctorsListActivity.class);
-                doctorsIntent.putExtra("type",categories.get(position));
+                doctorsIntent.putExtra("type", categories.get(position));
                 context.startActivity(doctorsIntent);
             }
         });

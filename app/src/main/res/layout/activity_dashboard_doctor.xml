@@ -2,13 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/doctor_gradient"
-    android:layout_margin="5dp">
+    android:background="@drawable/doctor_gradient">
 
     <ExpandableListView
         android:id="@+id/lvExp"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"/>
 
     <ImageButton
         android:id="@+id/floating_button_doctor"

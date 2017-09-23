@@ -2,7 +2,9 @@ package com.example.tushar.pgi.view;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.provider.AlarmClock;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.example.tushar.pgi.Adapter.ExpandableListAdapter;
 import com.example.tushar.pgi.Adapter.ItemRecyclerViewAdapter;
 import com.example.tushar.pgi.R;
@@ -43,6 +46,14 @@ public class Dashboard extends AppCompatActivity {
     private String uid;
     private TextToSpeech tts;
     private List<Appointment> todaysAppointments;
+    private String name;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+    private static final String PREFS = "prefs";
+    private static final String NEW = "new";
+    private static final String NAME = "name";
+    private static final String AGE = "age";
+    private static final String AS_NAME = "as_name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +62,6 @@ public class Dashboard extends AppCompatActivity {
         Intent loginIntent = getIntent();
         uid = loginIntent.getStringExtra("uid");
         String type = loginIntent.getStringExtra("type");
-
 
         if (type.equalsIgnoreCase("doctor")) {
             isDoctor = true;
@@ -62,16 +72,13 @@ public class Dashboard extends AppCompatActivity {
         }
     }
 
-
     /**
      * This method gets the data of the particular doctor
      */
     private void getDoctorData() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("doctors");
-
         Query queryRef = myRef.orderByChild("uid").equalTo(uid);
-
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -104,9 +111,7 @@ public class Dashboard extends AppCompatActivity {
                 todaysAppointments.add(appointment);
             }
         }
-
         setLayoutOfDashboard(true, todaysAppointments);
-
     }
 
     private void setLayoutOfDashboard(boolean isDoctor, List<Appointment> appointments) {
@@ -128,8 +133,7 @@ public class Dashboard extends AppCompatActivity {
                         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                             Log.e("TTS", "This Language is not supported");
                         }
-                        speak("Hello");
-
+                        speak("");
                     } else {
                         Log.e("TTS", "Initilization Failed!");
                     }
@@ -158,7 +162,6 @@ public class Dashboard extends AppCompatActivity {
     private void speak(String text) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
-
         } else {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         }
@@ -170,7 +173,6 @@ public class Dashboard extends AppCompatActivity {
         listViewItems.add(new ItemObjects("Navigate to Room", R.drawable.book_appointment));
         listViewItems.add(new ItemObjects("My Reports", R.drawable.book_appointment));
         listViewItems.add(new ItemObjects("Read Text", R.drawable.book_appointment));
-
         return listViewItems;
     }
 
@@ -206,6 +208,8 @@ public class Dashboard extends AppCompatActivity {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     if (isDoctor) {
+                        preferences = getSharedPreferences(PREFS, 0);
+                        editor = preferences.edit();
                         if (result.get(0).contains("appointment")) {
                             speak("These are your Today's Appointment");
                             expListView = (ExpandableListView) findViewById(R.id.lvExp);
@@ -213,6 +217,8 @@ public class Dashboard extends AppCompatActivity {
                             expListView.setAdapter(listAdapter);
                         } else if (result.get(0).contains("leave")) {
                             speak("Leave Applied");
+                        } else {
+                            recognition(result.get(0));
                         }
                     } else {
                         if (result.get(0).contains("appointment")) {
@@ -239,5 +245,40 @@ public class Dashboard extends AppCompatActivity {
             tts.shutdown();
         }
         super.onDestroy();
+    }
+
+    private void recognition(String text) {
+
+        String[] speech = text.split(" ");
+        if (text.contains("emergency")) {
+            speak("We are looking into it");
+        }
+
+        if (text.contains("hello")) {
+            speak("Hello, what is your name?");
+        }
+
+        if (text.contains("my name is")) {
+            name = speech[speech.length - 1];
+            Log.e("THIS", "" + name);
+            editor.putString(NAME, name).apply();
+        }
+
+        if (text.contains("what time is it")) {
+            SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm");//dd/MM/yyyy
+            Date now = new Date();
+            String[] strDate = sdfDate.format(now).split(":");
+            if (strDate[1].contains("00"))
+                strDate[1] = "o'clock";
+            speak("The time is " + sdfDate.format(now));
+        }
+
+        if (text.contains("thank you")) {
+            speak("Your Welcome " + preferences.getString(NAME, null));
+        }
+
+        if (text.contains("what is my name")) {
+            speak("Your name is " + preferences.getString(NAME, null));
+        }
     }
 }

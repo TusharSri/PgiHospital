@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -86,7 +87,9 @@ public class Dashboard extends AppCompatActivity {
                     aa.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            for ()
+                            for (DataSnapshot childd : dataSnapshot.getChildren()){
+                                Log.e("awefwefawefawefawefewf",childd.getValue().toString());
+                            }
                         }
 
                         @Override

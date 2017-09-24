@@ -7,6 +7,7 @@
     <string name="tap_on_mic">Tap on mic to speak</string>
     <string name="eng_please_choose_a_category">Please Choose a category</string>
     <string name="hin_please_choose_a_category">एक वर्ग का चयन करें</string>
+
     <string-array name="time_slots">
         <item>1000-1030</item>
         <item>1030-1100</item>

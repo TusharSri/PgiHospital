@@ -1,11 +1,13 @@
 package com.example.tushar.pgi.view;
 
 import android.content.Intent;
+import android.graphics.drawable.TransitionDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.tushar.pgi.R;
@@ -29,7 +31,6 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
 
         qrScan = new IntentIntegrator(this);
         Button qrCodeScanButton = (Button) findViewById(R.id.button_scan_qr_code);

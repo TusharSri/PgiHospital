@@ -20,6 +20,7 @@ android {
 }
 
 dependencies {
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -31,9 +32,10 @@ dependencies {
     compile 'com.google.firebase:firebase-database:11.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.firebase:firebase-messaging:11.4.0'
-    compile 'com.google.firebase:firebase-core:11.4.0'
     testCompile 'junit:junit:4.12'
 }
+
+
 
 
 

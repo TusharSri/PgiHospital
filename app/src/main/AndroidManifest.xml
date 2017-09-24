@@ -22,6 +22,8 @@
         <activity android:name=".view.PatientPrescription"/>
         <activity android:name=".view.BaseActivity">
         </activity>
+
+        
     </application>
 
 </manifest>

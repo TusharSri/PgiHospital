@@ -107,7 +107,7 @@ public class Dashboard extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("doctors");
         Query queryRef = myRef.orderByChild("uid").equalTo(uid);
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        queryRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
@@ -345,6 +345,7 @@ public class Dashboard extends AppCompatActivity {
             speak("These are your Today's Appointment" + preferences.getString(NAME, null));
             expListView = (ExpandableListView) findViewById(R.id.lvExp);
             listAdapter = new ExpandableListAdapter(this, todaysAppointments);
+            listAdapter.notifyDataSetChanged();
             expListView.setAdapter(listAdapter);
         }
 

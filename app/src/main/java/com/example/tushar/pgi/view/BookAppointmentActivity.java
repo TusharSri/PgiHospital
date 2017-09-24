@@ -26,8 +26,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,12 +78,12 @@ public class BookAppointmentActivity extends AppCompatActivity {
         final TextView upcomingLeaves = (TextView) findViewById(R.id.text_upcoming_leaves);
 
         upcomingLeaves.setText("Upcoming leaves : " +doctor.getUpcomingLeaves());
-
+        int a = datePicker.getMonth();
         selectDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectedDateText =  datePicker.getDayOfMonth()+"/"+
-                        datePicker.getMonth()+"/"+datePicker.getYear();
+                        (datePicker.getMonth()+1)+"/"+datePicker.getYear();
                 selectedDate.setText("Date of Appointment : "+ selectedDateText);
             }
         });
@@ -95,6 +98,33 @@ public class BookAppointmentActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * Checks if the selected date is less than current date
+     * @param selectedDateText
+     * @return
+     */
+    private boolean dateLessThanCurrentDate(String selectedDateText) {
+        Date d = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("DD/MM/YY");
+        String[] y = dateFormat.format(d).split("/");
+        String[] x = selectedDateText.split("/");
+        if(Integer.parseInt(x[1]) > Integer.parseInt(y[1])){
+            return false;
+        }
+        else if(Integer.parseInt(x[1]) < Integer.parseInt(y[1])){
+            return true;
+        }
+        else if(Integer.parseInt(x[1]) == Integer.parseInt(y[1])){
+            if(Integer.parseInt(x[0]) > Integer.parseInt(y[0])){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -127,11 +157,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("doctors");
 
-        ArrayList<DoctorModel> doctorModelArrayList = new ArrayList<>();
-
         final String uid = doctor.getUid();
-
-
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -155,7 +181,6 @@ public class BookAppointmentActivity extends AppCompatActivity {
                     myRef.child(String.valueOf(index)).setValue(doctorModel.toMap());
                     Toast.makeText(BookAppointmentActivity.this, "Appointment Added", Toast.LENGTH_SHORT).show();
                     BookAppointmentActivity.this.finish();
-
                 }
             }
 

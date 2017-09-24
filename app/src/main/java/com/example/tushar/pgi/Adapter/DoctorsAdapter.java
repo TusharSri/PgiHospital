@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.tushar.pgi.R;
 import com.example.tushar.pgi.model.DoctorModel;
-import com.example.tushar.pgi.view.BookAppointmentActivity;
 
 import java.util.ArrayList;
 
@@ -44,7 +43,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter {
         ((DoctorsViewHolder)holder).itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bookAppointmentIntent = new Intent(context, BookAppointmentActivity.class);
+                Intent bookAppointmentIntent = new Intent(context, com.example.tushar.pgi.Adapter.BookAppointmentActivity.class);
                 bookAppointmentIntent.putExtra("doctor",doctor);
                 context.startActivity(bookAppointmentIntent);
             }

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tushar.pgi">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -18,22 +18,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.Dashboard"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.DoctorsListActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.DoctorCategoriesActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.BookAppointmentActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.PatientPrescription"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.BaseActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.Dashboard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.DoctorsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.DoctorCategoriesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.BookAppointmentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.PatientPrescription"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.BaseActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.paytm.pgsdk.PaytmPGActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation|keyboard"/>
+            android:configChanges="keyboardHidden|orientation|keyboard"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

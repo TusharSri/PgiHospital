@@ -152,6 +152,9 @@ public class Dashboard extends AppCompatActivity {
     private void setLayoutOfDashboard(boolean isDoctor, List<Appointment> appointments) {
         if (isDoctor) {
             setContentView(R.layout.activity_dashboard_doctor);
+            expListView = (ExpandableListView) findViewById(R.id.lvExp);
+            listAdapter = new ExpandableListAdapter(this, todaysAppointments);
+            expListView.setAdapter(listAdapter);
             ImageView doctorFloatingButton = (ImageView) findViewById(R.id.floating_button_doctor);
             doctorFloatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override

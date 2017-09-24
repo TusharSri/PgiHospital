@@ -142,9 +142,11 @@ public class PatientPrescription extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.button_cancel_appointment:
                 Toast.makeText(this, "cancel appointment", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
             case R.id.button_mark_done:
                 Toast.makeText(this, "complete ", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
         }
     }

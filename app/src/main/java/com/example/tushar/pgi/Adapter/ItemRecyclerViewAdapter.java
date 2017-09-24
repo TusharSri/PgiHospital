@@ -48,7 +48,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder
         holder.countryPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(itemList.get(position).getName().equalsIgnoreCase("Book Appointment")){
+                if(position==0){
                     Intent intent = new Intent(context, DoctorCategoriesActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);

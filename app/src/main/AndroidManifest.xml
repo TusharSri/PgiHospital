@@ -18,13 +18,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.Dashboard" />
-        <activity android:name=".view.DoctorsListActivity" />
-        <activity android:name=".view.DoctorCategoriesActivity" />
-        <activity android:name=".view.BookAppointmentActivity"></activity>
-        <activity android:name=".view.PatientPrescription"></activity>
-        <activity android:name=".view.BaseActivity">
-        </activity>
+        <activity android:name=".view.Dashboard"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.DoctorsListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.DoctorCategoriesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.BookAppointmentActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.PatientPrescription"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.BaseActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.paytm.pgsdk.PaytmPGActivity"
             android:screenOrientation="portrait"

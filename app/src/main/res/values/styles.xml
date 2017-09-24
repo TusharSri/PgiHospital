@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Animation" />
+
+    <!-- the animations must have been defined in your "anim" folder, of course -->
+    <style name="Animation.MyAwesomeAnimation" parent="android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/myawesomeanimation_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/hold_long</item>
+        <item name="android:activityCloseEnterAnimation">@anim/hold_long</item>
+        <item name="android:activityCloseExitAnimation">@anim/myawesomeanimation_exit</item>
+    </style>
+
 </resources>

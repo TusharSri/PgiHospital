@@ -16,6 +16,16 @@ public class Appointment implements Serializable{
     private String bedNumber;
     private String description;
 
+    public String getStatusCard() {
+        return statusCard;
+    }
+
+    public void setStatusCard(String statusCard) {
+        this.statusCard = statusCard;
+    }
+
+    public String statusCard;
+
     /**
      * No args constructor for use in serialization
      *

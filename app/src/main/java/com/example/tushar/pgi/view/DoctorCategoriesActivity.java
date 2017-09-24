@@ -24,23 +24,23 @@ import java.util.ArrayList;
 public class DoctorCategoriesActivity extends AppCompatActivity {
 
     String language;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctors_list);
 
-        ((TextView)findViewById(R.id.text_doctor_cat)).setText("Please choose a Category");
+        ((TextView) findViewById(R.id.text_doctor_cat)).setText("Please choose a Category");
 
         TextView cat = (TextView) findViewById(R.id.text_doctor_cat);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        language = prefs.getString("language","");
-        if(language.equals("hindi")){
+        language = prefs.getString("language", "");
+        if (language.equals("hindi")) {
             cat.setText(R.string.hin_please_choose_a_category);
         } else {
             cat.setText(R.string.eng_please_choose_a_category);
         }
         getAndSetData();
-
     }
 
     /**

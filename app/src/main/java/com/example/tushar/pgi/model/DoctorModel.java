@@ -15,6 +15,7 @@ public class DoctorModel implements Serializable{
     private String phone;
     private String age;
     private String upcomingLeaves;
+    private String statusofcard;
     private List<Appointment> appointments = null;
 
     /**

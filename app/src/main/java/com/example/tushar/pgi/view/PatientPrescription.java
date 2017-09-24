@@ -23,13 +23,14 @@ import java.util.Locale;
 public class PatientPrescription extends AppCompatActivity implements View.OnClickListener {
 
     private TextToSpeech tts;
+    Appointment appointments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_prescription);
 
-        Appointment appointments = (Appointment) getIntent().getSerializableExtra("patient_data");
+        appointments = (Appointment) getIntent().getSerializableExtra("patient_data");
         TextView patientName = (TextView) findViewById(R.id.text_patient_name);
         //TextView patientAge = (TextView) findViewById(R.id.text_age);
         TextView timing = (TextView) findViewById(R.id.text_time);
@@ -138,17 +139,22 @@ public class PatientPrescription extends AppCompatActivity implements View.OnCli
         switch (view.getId()) {
             case R.id.button_add_prescription:
                 Toast.makeText(this, "Prescription added", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.button_medical_history:
                 Toast.makeText(this, "medical history", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.button_cancel_appointment:
                 Toast.makeText(this, "cancel appointment", Toast.LENGTH_SHORT).show();
-                finish();
+                appointments.setStatusCard("cancel");
+                Intent intent= new Intent(this,Dashboard.class);
+                intent.putExtra("type", "doctor");
+                intent.putExtra("uid", "262484#34378");
+                startActivity(intent);
                 break;
             case R.id.button_mark_done:
                 Toast.makeText(this, "complete ", Toast.LENGTH_SHORT).show();
-                finish();
+                appointments.setStatusCard("complete");
                 break;
         }
     }

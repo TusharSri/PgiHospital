@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +35,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public ExpandableListAdapter(Context context,List<Appointment>  appointments) {
         this._context = context;
         this.appointments=appointments;
-        this.patientName = patientName;
-        this.patientDetails = patientDetails;
-        this.buildingNumber = buildingNumber;
-        this.floorNumber = floorNumber;
-        this.roomNumber = roomNumber;
-        this.bedNumber = bedNumber;
-        this.patientTime = patientTime;
-        this.patientImage = patientImage;
     }
 
     @Override
@@ -144,6 +137,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         bedNumber.setText(appointments.get(groupPosition).getBedNumber());
         patientTime.setText(appointments.get(groupPosition).getTimeSlot());
 
+        if(null != appointments.get(groupPosition).getStatusCard() && appointments.get(groupPosition).getStatusCard().equals("cancel")){
+            convertView.setBackgroundColor(Color.RED);
+        } else if(null != appointments.get(groupPosition).getStatusCard() && appointments.get(groupPosition).getStatusCard().equals("complete")){
+            convertView.setBackgroundColor(Color.GREEN);
+        }
         return convertView;
     }
 

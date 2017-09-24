@@ -138,9 +138,8 @@ public class Dashboard extends AppCompatActivity {
         List<Appointment> listOfAppointments = model.getAppointments();
 
         Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YY");
-        String currentDate = dateFormat.format(date);
-
+        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yy");
+        String currentDate = "24/09/17";
         for (Appointment appointment : listOfAppointments) {
             if (appointment.getDate().equalsIgnoreCase(currentDate)) {
                 todaysAppointments.add(appointment);
@@ -153,9 +152,9 @@ public class Dashboard extends AppCompatActivity {
         if (isDoctor) {
             setContentView(R.layout.activity_dashboard_doctor);
             expListView = (ExpandableListView) findViewById(R.id.lvExp);
-            if(listAdapter==null) {
+            if (listAdapter == null) {
                 listAdapter = new ExpandableListAdapter(this, todaysAppointments);
-            }else{
+            } else {
                 listAdapter.notifyDataSetChanged();
             }
             expListView.setAdapter(listAdapter);
@@ -352,32 +351,32 @@ public class Dashboard extends AppCompatActivity {
                 speak("First Appointment is of " + todaysAppointments.get(0).getName() +
                         "in building number" + todaysAppointments.get(0).getBuildingNumber() +
                         " The patient is suffering from " + todaysAppointments.get(0).getDescription());
-            }
-            if (text.contains("second")) {
+            } else if (text.contains("second")) {
                 speak("second Appointment is of " + todaysAppointments.get(1).getName() +
                         "in building number" + todaysAppointments.get(1).getBuildingNumber() +
                         " The patient is suffering from " + todaysAppointments.get(1).getDescription());
-            }
-            if (text.contains("third")) {
+            } else if (text.contains("third")) {
                 speak("third Appointment is of " + todaysAppointments.get(1).getName() +
                         "in building number" + todaysAppointments.get(1).getBuildingNumber() +
                         " The patient is suffering from " + todaysAppointments.get(1).getDescription());
+            } else {
+                speak("Sorry couldn't fetch that notification");
             }
         } else if (text.contains("open") || text.contains("details")) {
             if (text.contains("first")) {
                 Intent patientdetail = new Intent(this, PatientPrescription.class);
                 patientdetail.putExtra("patient_data", todaysAppointments.get(0));
                 startActivity(patientdetail);
-            }
-            if (text.contains("second")) {
+            } else if (text.contains("second")) {
                 Intent patientdetail = new Intent(this, PatientPrescription.class);
                 patientdetail.putExtra("patient_data", todaysAppointments.get(1));
                 startActivity(patientdetail);
-            }
-            if (text.contains("third")) {
+            } else if (text.contains("third")) {
                 Intent patientdetail = new Intent(this, PatientPrescription.class);
                 patientdetail.putExtra("patient_data", todaysAppointments.get(2));
                 startActivity(patientdetail);
+            }  else{
+                speak("Sorry couldn't fetch that notification");
             }
         } else if (text.contains("appointment") && text.contains("today")) {
             speak("These are your Today's Appointment" + preferences.getString(NAME, null));

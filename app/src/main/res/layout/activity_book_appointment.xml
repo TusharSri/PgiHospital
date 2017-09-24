@@ -80,8 +80,9 @@
                 android:layout_marginTop="20dp"
                 android:id="@+id/button_book_appointment"
                 android:layout_width="match_parent"
-                android:text="Confirm"
-                android:layout_height="wrap_content"/>
+                android:padding="20dp"
+                android:background="@drawable/paytm"
+                android:layout_height="60dp"/>
         </LinearLayout>
     </ScrollView>
 

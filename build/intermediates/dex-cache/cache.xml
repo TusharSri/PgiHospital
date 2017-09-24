@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\Tushar\.gradle\caches\modules-2\files-2.1\com.google.zxing\core\3.2.1\2287494d4f5f9f3a9a2bb6980e3f32053721b315\core-3.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="2287494d4f5f9f3a9a2bb6980e3f32053721b315">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\core-3.2.1_14709898fd2e41dc70c8a562a4bf5cd2cdaa741f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.journeyapps\zxing-android-embedded\3.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="0e1f104cf60bfe34147ef670229f2635789c79a4">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.journeyapps-zxing-android-embedded-3.4.0_27aba89103ba2e4a031484427905c9ad2832e0f1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-25.3.1_480e1a6f729ba1bb1eaf9b881bba7d346ec83150.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.google.firebase\firebase-iid\11.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="4c0c3a9709adc7608860b0a9f65f661cd3ff4d07">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-iid-11.4.0_7ab30cc71366329fdac2dabf2ad7419a216f8e90.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\libs\PGSDK_V2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="b49db2b817fe96cba5c26fb814cfc7f5b2803a82">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\PGSDK_V2.1_5e1a80852714c6c4c433e6b6ae7f56dafe0aebb2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database\11.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="4419abd361932fe84800422dd6f86adb912394e6">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-database-11.4.0_208ec5ae0aecaf937577c605d9b96160572b1174.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics\11.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="bd47a98a8f3d53220afca6f869f37c56c273c8d9">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-analytics-11.4.0_5e733fb853dd28ef0b289449ab2e713b08d11c88.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Tushar\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_7c639e0b8194d044e1799bc991ad2569a890f49e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-25.3.1_9c36e6d67b237c3d1ec2c561a332f87353104482.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-25.3.1_71b9e29a61a25c548229a2fc1c39990d5e237ab6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-25.3.1_ee29670dcc5327857abc5c80f86bf4dbd7985b54.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.1.1_6c6ebb5ba0b56115687dbb130c0adee45bd4ba54.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-25.3.1_884d5653f1af874bc92243bd3e4b220ccc71bcbf.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database-connection\11.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="684feeeb5dfd681b5babbf3c7ea436e2a1b8cdbc">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-database-connection-11.4.0_c5ee86a0c02287f26dcab761e797f6031b1d05d5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tasks\11.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="49743d94bd8f62b64049c3e3065c18598ce2ca7f">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-tasks-11.4.0_f9a891a412a352652431aa6b7b92423176eea7f8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\11.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="eb366c8b72908e2afa66c66b0a3f1318265a473e">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-analytics-impl-11.4.0_604b3011ab7a0e918b5f740836f5c915bc48864c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-25.3.1_db15b7d0b394c52c583d35b174f63d004e29e6f1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Tushar\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_ab8c74a663f9846402fb9eeeb955d6a79950a199.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-25.3.1_d08ea3ddb4fc616dd5c65ef47ae59a003de84a04.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\11.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="453427e529ccd47ef859c7d739a59ab32f7f14ee">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-basement-11.4.0_94923ecf93520bedb120ba9afeafc344b7a03501.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.google.firebase\firebase-common\11.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="ed18fdd695456683717079e695c5683cdc042d89">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-common-11.4.0_6cc6d2fb5819fb0221d9d494c04108ca1b3b213a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.google.firebase\firebase-messaging\11.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="e1fb737d72e295a54c677c0ab9aecfe3518e2ec6">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-messaging-11.4.0_7326a5fdc3e1a7d465d3e7e2393e4ad8be8775b0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.android.support.constraint\constraint-layout\1.0.2\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.android.support.constraint-constraint-layout-1.0.2_f3f7d0a2a12c01d87ac7530465fc98e85544fafb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.android.support-support-media-compat-25.3.1_e88e2a213ffd8803c9982c903ad0baef6bd1d940.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="c5e6490573cd2cc8018417f60ddd251138b6ed61">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-24.2.1_63e4c03004887e3e39bb2f5dbe5285b7d177fd41.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\Tutorials\android\Infy\PGI\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="E:\Tutorials\android\Infy\PGI\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-25.3.1_b1e89178f201cc10d892af4c7f6bd1274b46c19a.jar" />
+    </item>
+
+</items>

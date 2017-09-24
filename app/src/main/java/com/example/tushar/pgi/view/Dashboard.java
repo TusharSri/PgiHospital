@@ -2,11 +2,14 @@ package com.example.tushar.pgi.view;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.example.tushar.pgi.Adapter.ExpandableListAdapter;
 import com.example.tushar.pgi.Adapter.ItemRecyclerViewAdapter;
 import com.example.tushar.pgi.R;
@@ -71,6 +75,7 @@ public class Dashboard extends AppCompatActivity {
 
     /**
      * This method saves the patient information in the db
+     *
      * @param uid
      */
     private void savePatientInformationInSp(final String uid) {
@@ -81,7 +86,7 @@ public class Dashboard extends AppCompatActivity {
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Patient patient = child.getValue(Patient.class);
                     String MyPREFERENCES = "abcd";
                     SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -169,6 +174,7 @@ public class Dashboard extends AppCompatActivity {
             });
         } else {
             setContentView(R.layout.activity_dashboard_patient);
+            showAlertDAilouge();
             ImageView patiientFloatingButton = (ImageView) findViewById(R.id.floating_button_patient);
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
             recyclerView.setHasFixedSize(true);
@@ -185,6 +191,34 @@ public class Dashboard extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void showAlertDAilouge() {
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("भाषा को हिंदी में परिवर्तित करें")
+                .setCancelable(false)
+                .setPositiveButton("हाँ", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("language", "hindi");
+                        editor.commit();
+                    }
+                })
+                .setNegativeButton("नहीं", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("language", "english");
+                        editor.commit();
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
     private void speak(String text) {
@@ -271,41 +305,27 @@ public class Dashboard extends AppCompatActivity {
         String[] speech = text.split(" ");
         if (text.contains("emergency")) {
             speak("We are looking into it");
-        }
-
-        if (text.contains("hello")) {
+        } else if (text.contains("hello")) {
             speak("Hello, what is your name?");
-        }
-
-        if (text.contains("my name is")) {
+        } else if (text.contains("my name is")) {
             String name = speech[speech.length - 1];
             Log.e("THIS", "" + name);
             editor.putString(NAME, name).apply();
             speak("what can i do for you " + preferences.getString(NAME, null));
-        }
-
-        if (text.contains("what") && text.contains("time")) {
+        } else if (text.contains("what") && text.contains("time")) {
             SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm");//dd/MM/yyyy
             Date now = new Date();
             String[] strDate = sdfDate.format(now).split(":");
             if (strDate[1].contains("00"))
                 strDate[1] = "o'clock";
             speak("The time is " + sdfDate.format(now));
-        }
-
-        if (text.contains("thank you") || text.contains("thanks")) {
+        } else if (text.contains("thank you") || text.contains("thanks")) {
             speak("Your Welcome " + preferences.getString(NAME, null));
-        }
-
-        if (text.contains("leave")) {
+        } else if (text.contains("leave")) {
             speak("For which date you want to apply leave " + preferences.getString(NAME, null));
-        }
-
-        if (text.contains("what") && text.contains("my name")) {
+        } else if (text.contains("what") && text.contains("my name")) {
             speak("Your name is " + preferences.getString(NAME, null));
-        }
-
-        if (text.contains("read") || text.contains("repeat")) {
+        } else if (text.contains("read") || text.contains("repeat")) {
             if (text.contains("first")) {
                 speak("First Appointment is of " + todaysAppointments.get(0).getName() +
                         "in building number" + todaysAppointments.get(0).getBuildingNumber() +
@@ -321,9 +341,7 @@ public class Dashboard extends AppCompatActivity {
                         "in building number" + todaysAppointments.get(1).getBuildingNumber() +
                         " The patient is suffering from " + todaysAppointments.get(1).getDescription());
             }
-        }
-
-        if (text.contains("open") || text.contains("details")) {
+        } else if (text.contains("open") || text.contains("details")) {
             if (text.contains("first")) {
                 Intent patientdetail = new Intent(this, PatientPrescription.class);
                 patientdetail.putExtra("patient_data", todaysAppointments.get(0));
@@ -339,21 +357,17 @@ public class Dashboard extends AppCompatActivity {
                 patientdetail.putExtra("patient_data", todaysAppointments.get(2));
                 startActivity(patientdetail);
             }
-        }
-
-        if (text.contains("appointment") && text.contains("today")) {
+        } else if (text.contains("appointment") && text.contains("today")) {
             speak("These are your Today's Appointment" + preferences.getString(NAME, null));
             expListView = (ExpandableListView) findViewById(R.id.lvExp);
             listAdapter = new ExpandableListAdapter(this, todaysAppointments);
             expListView.setAdapter(listAdapter);
-        }
-
-        if (text.contains("yesterday")) {
+        } else if (text.contains("yesterday")) {
             speak("sorry we are unable to fetch appointments for yesterday");
-        }
-
-        if (text.contains("tomorrow")) {
+        } else if (text.contains("tomorrow")) {
             speak("sorry we are unable to fetch appointments for tommorow");
+        } else {
+            speak("I am sorry i didn't get you, can u please come again");
         }
     }
 }

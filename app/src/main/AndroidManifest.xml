@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tushar.pgi">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/pgi_logo"
@@ -15,13 +18,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.Dashboard"/>
-        <activity android:name=".view.DoctorsListActivity"/>
-        <activity android:name=".view.DoctorCategoriesActivity"/>
-        <activity android:name=".Adapter.BookAppointmentActivity"/>
-        <activity android:name=".view.PatientPrescription"/>
+        <activity android:name=".view.Dashboard" />
+        <activity android:name=".view.DoctorsListActivity" />
+        <activity android:name=".view.DoctorCategoriesActivity" />
+        <activity android:name=".view.BookAppointmentActivity"></activity>
+        <activity android:name=".view.PatientPrescription"></activity>
         <activity android:name=".view.BaseActivity">
         </activity>
+        <activity
+            android:name="com.paytm.pgsdk.PaytmPGActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|keyboard"/>
     </application>
 
 </manifest>

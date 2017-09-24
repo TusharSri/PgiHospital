@@ -73,8 +73,6 @@
             android:maxLines="1"
             android:hint="Enter Password Here"
             android:inputType="phone"
-            android:maxLength="14"
-            android:maxLines="1"
             android:textSize="25sp" />
 
         <Button

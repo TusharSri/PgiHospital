@@ -2,6 +2,8 @@ package com.example.tushar.pgi.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.tushar.pgi.R;
+import com.example.tushar.pgi.view.DoctorCategoriesActivity;
 import com.example.tushar.pgi.view.DoctorsListActivity;
 
 import java.util.ArrayList;
@@ -36,11 +39,19 @@ public class DoctorCategoriesAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         String hindiList;
-        if (categories.get(position).equals("Orthopedic")) {
-            hindiList = "हड्डी रोग विशेषज्ञ";
-        } else {
-            hindiList = "हृदय रोग विशेषज्ञ";
+        String language;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        language = prefs.getString("language","");
+        if(language.equals("hindi")){
+            if (categories.get(position).equals("Orthopedic")) {
+                hindiList = "हड्डी रोग विशेषज्ञ";
+            } else {
+                hindiList = "हृदय रोग विशेषज्ञ";
+            }
+        } else{
+            hindiList = categories.get(position);
         }
+
         ((DoctorCategoriesViewHolder) holder).categoryName.setText(hindiList);
         ((DoctorCategoriesViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
             @Override

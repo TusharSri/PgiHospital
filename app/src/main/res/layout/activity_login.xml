@@ -20,7 +20,6 @@
             android:gravity="center"
             android:layout_marginBottom="20dp"
             android:inputType="phone"
-            android:maxLength="14"
             android:maxLines="1"
             android:text="Please Login to continue"
             android:textColor="#fff"/>

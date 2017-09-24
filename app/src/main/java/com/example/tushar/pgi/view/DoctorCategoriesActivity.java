@@ -29,6 +29,8 @@ public class DoctorCategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctors_list);
 
+        ((TextView)findViewById(R.id.text_doctor_cat)).setText("Please choose a Category");
+
         TextView cat = (TextView) findViewById(R.id.text_doctor_cat);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         language = prefs.getString("language","");

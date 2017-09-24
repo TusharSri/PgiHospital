@@ -66,6 +66,8 @@ public class Dashboard extends AppCompatActivity {
         String type = loginIntent.getStringExtra("type");
 
         if (type.equalsIgnoreCase("doctor")) {
+            setContentView(R.layout.activity_dashboard_doctor);
+            expListView = (ExpandableListView) findViewById(R.id.lvExp);
             isDoctor = true;
             getDoctorData();
         } else {
@@ -138,9 +140,8 @@ public class Dashboard extends AppCompatActivity {
         List<Appointment> listOfAppointments = model.getAppointments();
 
         Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YY");
-        String currentDate = dateFormat.format(date);
-
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
+        String currentDate = "24/09/17";
         for (Appointment appointment : listOfAppointments) {
             if (appointment.getDate().equalsIgnoreCase(currentDate)) {
                 todaysAppointments.add(appointment);
@@ -149,15 +150,10 @@ public class Dashboard extends AppCompatActivity {
         setLayoutOfDashboard(true, todaysAppointments);
     }
 
+
     private void setLayoutOfDashboard(boolean isDoctor, List<Appointment> appointments) {
         if (isDoctor) {
-            setContentView(R.layout.activity_dashboard_doctor);
-            expListView = (ExpandableListView) findViewById(R.id.lvExp);
-            if(listAdapter==null) {
-                listAdapter = new ExpandableListAdapter(this, todaysAppointments);
-            }else{
-                listAdapter.notifyDataSetChanged();
-            }
+            listAdapter = new ExpandableListAdapter(this, todaysAppointments);
             expListView.setAdapter(listAdapter);
             ImageView doctorFloatingButton = (ImageView) findViewById(R.id.floating_button_doctor);
             doctorFloatingButton.setOnClickListener(new View.OnClickListener() {
@@ -352,32 +348,35 @@ public class Dashboard extends AppCompatActivity {
                 speak("First Appointment is of " + todaysAppointments.get(0).getName() +
                         "in building number" + todaysAppointments.get(0).getBuildingNumber() +
                         " The patient is suffering from " + todaysAppointments.get(0).getDescription());
-            }
-            if (text.contains("second")) {
+            } else if (text.contains("second")) {
                 speak("second Appointment is of " + todaysAppointments.get(1).getName() +
                         "in building number" + todaysAppointments.get(1).getBuildingNumber() +
                         " The patient is suffering from " + todaysAppointments.get(1).getDescription());
-            }
-            if (text.contains("third")) {
+            } else if (text.contains("third")) {
                 speak("third Appointment is of " + todaysAppointments.get(1).getName() +
                         "in building number" + todaysAppointments.get(1).getBuildingNumber() +
                         " The patient is suffering from " + todaysAppointments.get(1).getDescription());
+            } else {
+                speak("This Appointment is not currently not available ");
             }
         } else if (text.contains("open") || text.contains("details")) {
             if (text.contains("first")) {
+                speak("Opening first appointment");
                 Intent patientdetail = new Intent(this, PatientPrescription.class);
                 patientdetail.putExtra("patient_data", todaysAppointments.get(0));
                 startActivity(patientdetail);
-            }
-            if (text.contains("second")) {
+            } else if (text.contains("second")) {
+                speak("Opening second appointment");
                 Intent patientdetail = new Intent(this, PatientPrescription.class);
                 patientdetail.putExtra("patient_data", todaysAppointments.get(1));
                 startActivity(patientdetail);
-            }
-            if (text.contains("third")) {
+            } else if (text.contains("third")) {
+                speak("Opening third appointment");
                 Intent patientdetail = new Intent(this, PatientPrescription.class);
                 patientdetail.putExtra("patient_data", todaysAppointments.get(2));
                 startActivity(patientdetail);
+            } else {
+                speak("This Appointment is currently not available ");
             }
         } else if (text.contains("appointment") && text.contains("today")) {
             speak("These are your Today's Appointment" + preferences.getString(NAME, null));

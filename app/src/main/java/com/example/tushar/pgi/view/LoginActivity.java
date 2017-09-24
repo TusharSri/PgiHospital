@@ -55,7 +55,7 @@ public class LoginActivity extends BaseActivity {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference myRef = database.getReference("login");
 
-                    Query queryRef = myRef.orderByChild("uid").equalTo(String.valueOf(aadharNumberEditText.getText()));
+                    Query queryRef = myRef.orderByChild("uid").equalTo(String.valueOf(aadharNumberEditText.getText().toString().replaceAll(" ","")));
                     queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
             } else {
-                aadharNumberEditText.setText(result.getContents());
+                aadharNumberEditText.setText(result.getContents().substring(29,43));
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

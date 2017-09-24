@@ -2,7 +2,9 @@
 package com.example.tushar.pgi.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DoctorModel implements Serializable{
 
@@ -107,6 +109,20 @@ public class DoctorModel implements Serializable{
 
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uid",getUid());
+        map.put("name",getName());
+        map.put("type",getType());
+        map.put("email",getEmail());
+        map.put("phone",getPhone());
+        map.put("age",getAge());
+        map.put("upcomingLeaves",getUpcomingLeaves());
+        map.put("appointments",getAppointments());
+
+        return map;
     }
 
 }

@@ -1,9 +1,13 @@
 package com.example.tushar.pgi.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
+
 import com.example.tushar.pgi.Adapter.*;
 
 import com.example.tushar.pgi.R;
@@ -19,17 +23,27 @@ import java.util.ArrayList;
 
 public class DoctorCategoriesActivity extends AppCompatActivity {
 
+    String language;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctors_list);
 
+        TextView cat = (TextView) findViewById(R.id.text_doctor_cat);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        language = prefs.getString("language","");
+        if(language.equals("hindi")){
+            cat.setText(R.string.hin_please_choose_a_category);
+        } else {
+            cat.setText(R.string.eng_please_choose_a_category);
+        }
         getAndSetData();
 
     }
 
     /**
-     *  This method sets the recycler view
+     * This method sets the recycler view
+     *
      * @param pCategories
      */
     private void setRecyclerView(ArrayList<String> pCategories) {
@@ -46,14 +60,13 @@ public class DoctorCategoriesActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("doctors");
 
 
-
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<String> categories = new ArrayList<>();
-                for(DataSnapshot child : dataSnapshot.getChildren()){
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
                     DoctorModel doctorModel = child.getValue(DoctorModel.class);
-                    if(!categories.contains(doctorModel.getType())){
+                    if (!categories.contains(doctorModel.getType())) {
                         categories.add(doctorModel.getType());
                     }
                 }

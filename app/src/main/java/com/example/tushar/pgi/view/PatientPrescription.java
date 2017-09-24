@@ -23,6 +23,7 @@ import java.util.Locale;
 public class PatientPrescription extends AppCompatActivity implements View.OnClickListener {
 
     private TextToSpeech tts;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +71,7 @@ public class PatientPrescription extends AppCompatActivity implements View.OnCli
                 }
             }
         });
+        tts.setSpeechRate(1);
     }
 
     private void speak(String text) {
@@ -80,7 +82,7 @@ public class PatientPrescription extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void listen(){
+    private void listen() {
         Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
@@ -97,7 +99,7 @@ public class PatientPrescription extends AppCompatActivity implements View.OnCli
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 100){
+        if (requestCode == 100) {
             if (resultCode == RESULT_OK && null != data) {
                 ArrayList<String> res = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 String inSpeech = res.get(0);
@@ -106,21 +108,17 @@ public class PatientPrescription extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void recognition(String text){
-        if(text.contains("add") && text.contains("prescription")){
+    private void recognition(String text) {
+        if (text.contains("add") && text.contains("prescription")) {
             speak("Prescription added");
-        }
-
-        if(text.contains("medical") && text.contains("history")){
+        } else if (text.contains("medical") && text.contains("history")) {
             speak("medical history");
-        }
-
-        if(text.contains("cancel") && text.contains("appointment")){
+        } else if (text.contains("cancel") && text.contains("appointment")) {
             speak("cancel appointment");
-        }
-
-        if(text.contains("done") || text.contains("complete")){
+        } else if (text.contains("done") || text.contains("complete")) {
             speak("The Appointment is been completed by you ");
+        } else {
+            speak("I am sorry i didn't get you, can u please come again");
         }
     }
 
@@ -135,7 +133,7 @@ public class PatientPrescription extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.button_add_prescription:
                 Toast.makeText(this, "Prescription added", Toast.LENGTH_SHORT).show();
                 break;

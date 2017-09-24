@@ -23,6 +23,8 @@
         <activity android:name=".view.DoctorCategoriesActivity" />
         <activity android:name=".view.BookAppointmentActivity"></activity>
         <activity android:name=".view.PatientPrescription"></activity>
+        <activity android:name=".view.BaseActivity">
+        </activity>
         <activity
             android:name="com.paytm.pgsdk.PaytmPGActivity"
             android:screenOrientation="portrait"

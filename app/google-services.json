@@ -42,6 +42,13 @@
             {
               "client_id": "25812976218-rva4eali0mupcrd7927n853trqi95ukg.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "25812976218-psda0ad8theof5ci745m7cvm0b2hq52a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.infosys.hospitalmanagement"
+              }
             }
           ]
         },

@@ -110,13 +110,15 @@ public class PatientPrescription extends AppCompatActivity implements View.OnCli
 
     private void recognition(String text) {
         if (text.contains("add") && text.contains("prescription")) {
-            speak("Prescription added");
+            speak("Prescription feature is a module which is yet to be added");
         } else if (text.contains("medical") && text.contains("history")) {
-            speak("medical history");
+            speak("medical history module is yet to be added");
         } else if (text.contains("cancel") && text.contains("appointment")) {
             speak("cancel appointment");
+            finish();
         } else if (text.contains("done") || text.contains("complete")) {
             speak("The Appointment is been completed by you ");
+            finish();
         } else {
             speak("I am sorry i didn't get you, can u please come again");
         }

@@ -114,7 +114,7 @@ public class Dashboard extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("doctors");
         Query queryRef = myRef.orderByChild("uid").equalTo(uid);
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        queryRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
@@ -138,7 +138,7 @@ public class Dashboard extends AppCompatActivity {
         List<Appointment> listOfAppointments = model.getAppointments();
 
         Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YY");
         String currentDate = dateFormat.format(date);
 
         for (Appointment appointment : listOfAppointments) {
@@ -153,7 +153,11 @@ public class Dashboard extends AppCompatActivity {
         if (isDoctor) {
             setContentView(R.layout.activity_dashboard_doctor);
             expListView = (ExpandableListView) findViewById(R.id.lvExp);
-            listAdapter = new ExpandableListAdapter(this, todaysAppointments);
+            if(listAdapter==null) {
+                listAdapter = new ExpandableListAdapter(this, todaysAppointments);
+            }else{
+                listAdapter.notifyDataSetChanged();
+            }
             expListView.setAdapter(listAdapter);
             ImageView doctorFloatingButton = (ImageView) findViewById(R.id.floating_button_doctor);
             doctorFloatingButton.setOnClickListener(new View.OnClickListener() {

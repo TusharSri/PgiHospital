@@ -87,8 +87,11 @@ public class BookAppointmentActivity extends AppCompatActivity {
         selectDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedDateText = datePicker.getDayOfMonth() + "/" +
-                        (datePicker.getMonth()+1) + "/" + datePicker.getYear();
+
+
+
+                selectedDateText = condate(datePicker.getDayOfMonth()) + "/" +
+                        condate(datePicker.getMonth()+1) + "/" + String.valueOf(datePicker.getYear()).substring(2);
                 selectedDate.setText("Date of Appointment : " + selectedDateText);
             }
         });
@@ -104,6 +107,14 @@ public class BookAppointmentActivity extends AppCompatActivity {
                 paytmGateway();
             }
         });
+    }
+
+    private String condate(int i){
+        if(i<10){
+            return "0"+i;
+        }else{
+            return String.valueOf(i);
+        }
     }
 
     private void paytmGateway() {

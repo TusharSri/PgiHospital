@@ -88,7 +88,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selectedDateText = datePicker.getDayOfMonth() + "/" +
-                        datePicker.getMonth() + "/" + datePicker.getYear();
+                        (datePicker.getMonth()+1) + "/" + datePicker.getYear();
                 selectedDate.setText("Date of Appointment : " + selectedDateText);
             }
         });

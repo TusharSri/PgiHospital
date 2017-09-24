@@ -54,6 +54,8 @@ public class Dashboard extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private static final String PREFS = "prefs";
     private static final String NAME = "name";
+    String language = "";
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +152,9 @@ public class Dashboard extends AppCompatActivity {
     private void setLayoutOfDashboard(boolean isDoctor, List<Appointment> appointments) {
         if (isDoctor) {
             setContentView(R.layout.activity_dashboard_doctor);
+            expListView = (ExpandableListView) findViewById(R.id.lvExp);
+            listAdapter = new ExpandableListAdapter(this, todaysAppointments);
+            expListView.setAdapter(listAdapter);
             ImageView doctorFloatingButton = (ImageView) findViewById(R.id.floating_button_doctor);
             doctorFloatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -174,15 +179,16 @@ public class Dashboard extends AppCompatActivity {
             });
         } else {
             setContentView(R.layout.activity_dashboard_patient);
-            showAlertDAilouge();
             ImageView patiientFloatingButton = (ImageView) findViewById(R.id.floating_button_patient);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+            recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
             recyclerView.setHasFixedSize(true);
             StaggeredGridLayoutManager gaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(gaggeredGridLayoutManager);
             List<ItemObjects> gaggeredList = getListItemData();
             ItemRecyclerViewAdapter rcAdapter = new ItemRecyclerViewAdapter(getApplicationContext(), gaggeredList);
             recyclerView.setAdapter(rcAdapter);
+
+            showAlertDAilouge();
 
             patiientFloatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -195,7 +201,6 @@ public class Dashboard extends AppCompatActivity {
 
     private void showAlertDAilouge() {
 
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("भाषा को हिंदी में परिवर्तित करें")
                 .setCancelable(false)
@@ -204,7 +209,13 @@ public class Dashboard extends AppCompatActivity {
                         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putString("language", "hindi");
+                        language = "hindi";
                         editor.commit();
+                        StaggeredGridLayoutManager gaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                        recyclerView.setLayoutManager(gaggeredGridLayoutManager);
+                        List<ItemObjects> gaggeredList = getListItemData();
+                        ItemRecyclerViewAdapter rcAdapter = new ItemRecyclerViewAdapter(getApplicationContext(), gaggeredList);
+                        recyclerView.setAdapter(rcAdapter);
                     }
                 })
                 .setNegativeButton("नहीं", new DialogInterface.OnClickListener() {
@@ -231,10 +242,17 @@ public class Dashboard extends AppCompatActivity {
 
     private List<ItemObjects> getListItemData() {
         List<ItemObjects> listViewItems = new ArrayList<>();
-        listViewItems.add(new ItemObjects("Book Appointment", R.drawable.book_appointment));
-        listViewItems.add(new ItemObjects("Navigate to Room", R.drawable.book_appointment));
-        listViewItems.add(new ItemObjects("My Reports", R.drawable.book_appointment));
-        listViewItems.add(new ItemObjects("Read Text", R.drawable.book_appointment));
+        if (language.equals("hindi")) {
+            listViewItems.add(new ItemObjects("निर्धारित तारीख बुक करना", R.drawable.book_appointment));
+            listViewItems.add(new ItemObjects("पथ प्रदर्शन", R.drawable.book_appointment));
+            listViewItems.add(new ItemObjects("मेरी रिपोर्ट", R.drawable.book_appointment));
+            listViewItems.add(new ItemObjects("पढ़ें", R.drawable.book_appointment));
+        } else {
+            listViewItems.add(new ItemObjects("Book Appointment", R.drawable.book_appointment));
+            listViewItems.add(new ItemObjects("Navigate to Room", R.drawable.book_appointment));
+            listViewItems.add(new ItemObjects("My Reports", R.drawable.book_appointment));
+            listViewItems.add(new ItemObjects("Read Text", R.drawable.book_appointment));
+        }
         return listViewItems;
     }
 
